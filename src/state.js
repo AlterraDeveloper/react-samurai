@@ -13,11 +13,17 @@ const state = {
       { message: "qwerty 123" },
       { message: "qwerty 21321432" },
       { message: "qwerty test test" },
+      { message: "Hello" },
+      { message: "Hello" },
+      { message: "How are you?" },
+      { message: "Fine, thanks" },
+
     ],
     dialogs: [
-      { id: 1, name: "Vlad" },
-      { id: 2, name: "Sveta" },
-      { id: 3, name: "Lena" },
+      { id: 1, name: "Vlad" , imgUrl:'https://randomuser.me/api/portraits/men/73.jpg'},
+      { id: 2, name: "Sveta", imgUrl: 'https://randomuser.me/api/portraits/women/73.jpg' },
+      { id: 3, name: "Lena" , imgUrl: 'https://randomuser.me/api/portraits/women/37.jpg'},
+      { id: 4, name: "Petr" , imgUrl: 'https://randomuser.me/api/portraits/men/8.jpg'},
     ],
   },
 };
