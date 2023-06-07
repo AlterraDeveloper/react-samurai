@@ -1,0 +1,34 @@
+img.circle {
+	object-fit: cover;
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+	margin: 0px 10px;
+}
+
+.post {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 50%;
+}
+
+.postContent{
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.postMessage{
+	font-size: 26px;
+	width: 100%;
+}
+
+.postLikes{
+	width: 30%;
+	font-size: 25px;
+}
+
+.post + .post {
+	margin-top: 10px;
+}

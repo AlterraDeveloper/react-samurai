@@ -4,7 +4,7 @@ import s from "./DialogItem.module.css";
 const DialogItem = (props) => {
   return (
     <div className={s.dialogItem}>
-      <img className={s.circle} src={props.dialogData.imgUrl} />
+      <img className={s.circle} src={props.dialogData.imgUrl} alt=""/>
       <div className={s.dialogName}>{props.dialogData.name}</div>
     </div>
   );

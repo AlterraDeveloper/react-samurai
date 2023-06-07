@@ -1,0 +1,32 @@
+.messageContainer{
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	height: 100%;
+	justify-content: space-around;
+}
+
+.messages {
+	font-size: 18px;
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	padding-left: 30px;
+	height: 80%;
+	position: relative;
+}
+
+.messageForm {
+	position: absolute;
+	bottom: 5%;
+	right: 7%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;	
+	width: 50%;
+}
+
+.messageForm textarea{
+	width: 100%;
+}
+
