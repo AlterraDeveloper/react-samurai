@@ -38,6 +38,7 @@ const state = {
       { message: "How are you?" },
       { message: "Fine, thanks" },
     ],
+
     dialogs: [
       {
         id: 1,
@@ -63,4 +64,17 @@ const state = {
   },
 };
 
-export default state;
+const addMessage = (text) => {
+  state.dialogsPage.messages.push({ message: text });
+};
+
+const addPost = (text) => {
+  state.profilePage.posts.push({
+    id: 5,
+    message: text,
+    likesCount: 0,
+    imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
+  });
+};
+
+export { state, addMessage, addPost };

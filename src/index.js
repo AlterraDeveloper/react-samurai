@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import state from "./state";
+import {state, addMessage, addPost} from "./state";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <App state={state} />
+    <App state={state} addMessage={addMessage} addPost={addPost}/>
   </React.StrictMode>
 );
 
