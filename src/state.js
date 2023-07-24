@@ -1,3 +1,5 @@
+import { rerenderEntireTree } from "./render";
+
 const state = {
   profilePage: {
     posts: [
@@ -26,6 +28,7 @@ const state = {
         imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
       },
     ],
+    newPostText: "eugene kiselev",
   },
   dialogsPage: {
     messages: [
@@ -66,15 +69,27 @@ const state = {
 
 const addMessage = (text) => {
   state.dialogsPage.messages.push({ message: text });
+  rerenderInterface();
 };
 
-const addPost = (text) => {
+const addPost = () => {
   state.profilePage.posts.push({
     id: 5,
-    message: text,
+    message: state.profilePage.newPostText,
     likesCount: 0,
     imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
   });
+  state.profilePage.newPostText = "";
+  rerenderInterface();
 };
 
-export { state, addMessage, addPost };
+const updateNewPostText = (newText) => {
+  state.profilePage.newPostText = newText;
+  rerenderInterface();
+};
+
+const rerenderInterface = () => {
+  rerenderEntireTree(state, addMessage, addPost, updateNewPostText);
+};
+
+export { state, addMessage, addPost, updateNewPostText };
