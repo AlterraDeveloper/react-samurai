@@ -1,4 +1,6 @@
-import { rerenderEntireTree } from "./render";
+let rerenderEntireTree = () => {
+  console.log("State changed");
+};
 
 const state = {
   profilePage: {
@@ -69,7 +71,7 @@ const state = {
 
 const addMessage = (text) => {
   state.dialogsPage.messages.push({ message: text });
-  rerenderInterface();
+  rerenderInterface(state);
 };
 
 const addPost = () => {
@@ -80,16 +82,20 @@ const addPost = () => {
     imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
   });
   state.profilePage.newPostText = "";
-  rerenderInterface();
+  rerenderInterface(state);
 };
 
 const updateNewPostText = (newText) => {
   state.profilePage.newPostText = newText;
-  rerenderInterface();
+  rerenderInterface(state);
 };
 
-const rerenderInterface = () => {
-  rerenderEntireTree(state, addMessage, addPost, updateNewPostText);
+const rerenderInterface = (state) => {
+  rerenderEntireTree(state);
 };
 
-export { state, addMessage, addPost, updateNewPostText };
+const subscribe = (observer) => {
+  rerenderEntireTree = observer;
+};
+
+export { state, addMessage, addPost, updateNewPostText, subscribe };
