@@ -2,13 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import {
-  addMessage,
-  addPost,
-  state,
-  subscribe,
-  updateNewPostText,
-} from "./state";
+import store from "./state";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,14 +11,14 @@ const rerenderEntireTree = (state) => {
     <React.StrictMode>
       <App
         state={state}
-        addMessage={addMessage}
-        addPost={addPost}
-        updateNewPostText={updateNewPostText}
+        addMessage={store.addMessage.bind(store)}
+        addPost={store.addPost.bind(store)}
+        updateNewPostText={store.updateNewPostText.bind(store)}
       />
     </React.StrictMode>
   );
 };
 
-rerenderEntireTree(state);
+rerenderEntireTree(store.getState()); 
 
-subscribe(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);
