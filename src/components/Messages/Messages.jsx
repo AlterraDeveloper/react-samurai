@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./Messages.module.css";
 import Message from "../Message/Message";
+import { addMessageActionCreator } from "../../state";
 
 const Messages = (props) => {
   const messagesElements = props.messages.map((m, i) => (
@@ -10,10 +11,7 @@ const Messages = (props) => {
   const messageText = React.createRef();
 
   const sendMessage = () => {
-    props.store.dispatch({
-      type: "ADD-MESSAGE",
-      text: messageText.current.value,
-    });
+    props.store.dispatch(addMessageActionCreator(messageText.current.value));
     messageText.current.value = "";
   };
 
