@@ -10,7 +10,10 @@ const Messages = (props) => {
   const messageText = React.createRef();
 
   const sendMessage = () => {
-    props.addMessage(messageText.current.value);
+    props.store.dispatch({
+      type: "ADD-MESSAGE",
+      text: messageText.current.value,
+    });
     messageText.current.value = "";
   };
 

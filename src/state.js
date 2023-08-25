@@ -27,7 +27,7 @@ let store = {
           imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
         },
       ],
-      newPostText: "eugene kiselev",
+      newPostText: "",
     },
     dialogsPage: {
       messages: [
@@ -71,28 +71,27 @@ let store = {
   _callSubsciber() {
     console.log("State changed");
   },
-  addPost() {
-    debugger;
-    this._state.profilePage.posts.push({
-      id: 5,
-      message: this._state.profilePage.newPostText,
-      likesCount: 0,
-      imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
-    });
-    this._state.profilePage.newPostText = "";
-    this._callSubsciber(this._state);
-  },
-  addMessage(text) {
-    this._state.dialogsPage.messages.push({ message: text });
-    this._callSubsciber(this._state);
-  },
-  updateNewPostText(newText) {
-    debugger;
-    this._state.profilePage.newPostText = newText;
-    this._callSubsciber(this._state);
-  },
   subscribe(observer) {
     this._callSubsciber = observer;
+  },
+  dispatch(action) {
+    debugger;
+    if (action.type === "ADD-POST") {
+      this._state.profilePage.posts.push({
+        id: 5,
+        message: this._state.profilePage.newPostText,
+        likesCount: 0,
+        imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
+      });
+      this._state.profilePage.newPostText = "";
+      this._callSubsciber(this._state);
+    } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+      this._state.profilePage.newPostText = action.newText;
+      this._callSubsciber(this._state);
+    } else if (action.type === "ADD-MESSAGE") {
+      this._state.dialogsPage.messages.push({ message: action.text });
+      this._callSubsciber(this._state);
+    }
   },
 };
 
