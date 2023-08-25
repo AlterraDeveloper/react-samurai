@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./Messages.module.css";
 import Message from "../Message/Message";
-import { addMessageActionCreator } from "../../state";
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from "../../state";
 
 const Messages = (props) => {
   const messagesElements = props.messages.map((m, i) => (
@@ -11,15 +11,19 @@ const Messages = (props) => {
   const messageText = React.createRef();
 
   const sendMessage = () => {
-    props.store.dispatch(addMessageActionCreator(messageText.current.value));
+    props.store.dispatch(addMessageActionCreator());
     messageText.current.value = "";
   };
+
+  const OnMessageTextChanged = () => {
+    props.store.dispatch(updateNewMessageTextActionCreator(messageText.current.value))
+  }
 
   return (
     <div className={s.messageContainer}>
       <div className={s.messages}>{messagesElements}</div>
       <div className={s.messageForm}>
-        <textarea ref={messageText}></textarea>
+        <textarea ref={messageText} value={props.newMessageText} onChange={OnMessageTextChanged}></textarea>
         <button onClick={sendMessage}>Send message</button>
       </div>
     </div>

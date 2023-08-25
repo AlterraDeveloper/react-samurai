@@ -1,6 +1,7 @@
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_MESSAGE = "ADD-MESSAGE";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 
 let store = {
   _state: {
@@ -44,6 +45,7 @@ let store = {
         { message: "How are you?" },
         { message: "Fine, thanks" },
       ],
+      newMessageText: "",
 
       dialogs: [
         {
@@ -88,14 +90,17 @@ let store = {
         imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
       });
       this._state.profilePage.newPostText = "";
-      this._callSubsciber(this._state);
     } else if (action.type === UPDATE_NEW_POST_TEXT) {
       this._state.profilePage.newPostText = action.newText;
-      this._callSubsciber(this._state);
     } else if (action.type === ADD_MESSAGE) {
-      this._state.dialogsPage.messages.push({ message: action.text });
-      this._callSubsciber(this._state);
+      this._state.dialogsPage.messages.push({ 
+        message: this._state.dialogsPage.newMessageText 
+      });
+    } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+      this._state.dialogsPage.newMessageText = action.newMessageText;
     }
+
+    this._callSubsciber(this._state);
   },
 };
 
@@ -106,9 +111,13 @@ export const updateNewPostTextActionCreator = (text) => ({
   newText: text,
 });
 
-export const addMessageActionCreator = (text) => ({
-  type: ADD_MESSAGE,
-  text: text,
+export const addMessageActionCreator = () => ({
+  type: ADD_MESSAGE
+});
+
+export const updateNewMessageTextActionCreator = (text) => ({
+  type: UPDATE_NEW_MESSAGE_TEXT,
+  newMessageText: text,
 });
 
 export default store;
