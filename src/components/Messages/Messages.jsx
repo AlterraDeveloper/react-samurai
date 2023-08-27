@@ -4,26 +4,25 @@ import Message from "../Message/Message";
 import { addMessageActionCreator, updateNewMessageTextActionCreator } from "../../state";
 
 const Messages = (props) => {
-  const messagesElements = props.messages.map((m, i) => (
+  const messagesElements = props.state.messages.map((m, i) => (
     <Message message={m.message} idx={i} />
   ));
 
-  const messageText = React.createRef();
-
   const sendMessage = () => {
     props.store.dispatch(addMessageActionCreator());
-    messageText.current.value = "";
+    // messageText.current.value = "";
+    props.store.dispatch(updateNewMessageTextActionCreator(""));
   };
 
-  const OnMessageTextChanged = () => {
-    props.store.dispatch(updateNewMessageTextActionCreator(messageText.current.value))
+  const onMessageTextChanged = (event) => {
+    props.store.dispatch(updateNewMessageTextActionCreator(event.target.value))
   }
 
   return (
     <div className={s.messageContainer}>
       <div className={s.messages}>{messagesElements}</div>
       <div className={s.messageForm}>
-        <textarea ref={messageText} value={props.newMessageText} onChange={OnMessageTextChanged}></textarea>
+        <textarea value={props.state.newMessageText} onChange={onMessageTextChanged}></textarea>
         <button onClick={sendMessage}>Send message</button>
       </div>
     </div>
