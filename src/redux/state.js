@@ -1,9 +1,7 @@
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_MESSAGE = "ADD-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
+import { dialogsReducer } from "./dialogsReducer";
+import { profileReducer } from "./profileReducer";
 
-let store = {
+const store = {
   _state: {
     profilePage: {
       posts: [
@@ -81,44 +79,12 @@ let store = {
     this._callSubsciber = observer;
   },
   dispatch(action) {
-    debugger;
-    if (action.type === ADD_POST) {
-      this._state.profilePage.posts.push({
-        id: 5,
-        message: this._state.profilePage.newPostText,
-        likesCount: 0,
-        imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
-      });
-      this._state.profilePage.newPostText = "";
-    } else if (action.type === UPDATE_NEW_POST_TEXT) {
-      this._state.profilePage.newPostText = action.newText;
-    } else if (action.type === ADD_MESSAGE) {
-      this._state.dialogsPage.messages.push({ 
-        message: this._state.dialogsPage.newMessageText 
-      });
-    } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-      this._state.dialogsPage.newMessageText = action.newMessageText;
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
 
     this._callSubsciber(this._state);
   },
 };
-
-export const addPostActionCreator = () => ({ type: ADD_POST });
-
-export const updateNewPostTextActionCreator = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  newText: text,
-});
-
-export const addMessageActionCreator = () => ({
-  type: ADD_MESSAGE
-});
-
-export const updateNewMessageTextActionCreator = (text) => ({
-  type: UPDATE_NEW_MESSAGE_TEXT,
-  newMessageText: text,
-});
 
 export default store;
 window.store = store;
