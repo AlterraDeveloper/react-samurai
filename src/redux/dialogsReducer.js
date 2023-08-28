@@ -4,6 +4,8 @@ const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 export const dialogsReducer = (state, action) => {
   switch (action.type) {
     case ADD_MESSAGE:
+      if (!state.newMessageText) return state;
+
       state.messages.push({
         message: state.newMessageText,
       });

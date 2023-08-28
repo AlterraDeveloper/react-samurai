@@ -1,4 +1,6 @@
-body {}
+body {
+  overflow-y: hidden;
+}
 
 .app-wrapper {
   display: grid;
