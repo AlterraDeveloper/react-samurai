@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./Dialogs.module.css";
-import Messages from "../Messages/Messages";
 import DialogItem from "../DialogItem/DialogItem";
+import MessagesContainer from "../Messages/MessagesContainer";
 
 const Dialogs = (props) => {
   const dialogsElements = props.state.dialogs.map((d) => (
@@ -11,7 +11,7 @@ const Dialogs = (props) => {
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsElements}</div>
-      <Messages state={props.state} store={props.store}/>
+      <MessagesContainer store={props.store}/>
     </div>
   );
 };

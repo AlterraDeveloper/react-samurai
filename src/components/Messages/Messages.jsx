@@ -1,24 +1,19 @@
 import React from "react";
 import s from "./Messages.module.css";
 import Message from "../Message/Message";
-import {
-  addMessageActionCreator,
-  updateNewMessageTextActionCreator,
-} from "../../redux/dialogsReducer";
 
 const Messages = (props) => {
-  const messagesElements = props.state.messages.map((m, i) => (
+  const messagesElements = props.messages.map((m, i) => (
     <Message message={m.message} idx={i} />
   ));
 
-  const sendMessage = () => {
-    props.store.dispatch(addMessageActionCreator());
-    // messageText.current.value = "";
-    props.store.dispatch(updateNewMessageTextActionCreator(""));
+  const onSendMessage = () => {
+    props.sendMessage();
+    props.changeMessageText("");
   };
 
   const onMessageTextChanged = (event) => {
-    props.store.dispatch(updateNewMessageTextActionCreator(event.target.value));
+    props.changeMessageText(event.target.value);
   };
 
   return (
@@ -26,10 +21,10 @@ const Messages = (props) => {
       <div className={s.messages}>{messagesElements}</div>
       <div className={s.messageForm}>
         <textarea
-          value={props.state.newMessageText}
+          value={props.newMessageText}
           onChange={onMessageTextChanged}
         ></textarea>
-        <button onClick={sendMessage}>Send message</button>
+        <button onClick={onSendMessage}>Send message</button>
       </div>
     </div>
   );
