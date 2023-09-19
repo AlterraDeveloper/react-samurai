@@ -15,11 +15,11 @@ function App(props) {
           <Routes>
             <Route
               path="/profile"
-              element={<Profile store={props.store}/>}
+              element={<Profile />}
             />
             <Route
               path="/messages"
-              element={<Dialogs state={props.state.dialogsPage}  store={props.store}/>}
+              element={<Dialogs />}
             />
           </Routes>
         </div>

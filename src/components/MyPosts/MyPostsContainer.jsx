@@ -4,26 +4,33 @@ import {
   updateNewPostTextActionCreator,
 } from "../../redux/profileReducer";
 import MyPosts from "./MyPosts";
+import { StoreContext } from "../../StoreContext";
 
 const MyPostsContainer = (props) => {
-  const state = props.store.getState();
-
-  const addPost = () => {
-    props.store.dispatch(addPostActionCreator());
-    props.store.dispatch(updateNewPostTextActionCreator(""));
-  };
-
-  const onPostChange = (postText) => {
-    props.store.dispatch(updateNewPostTextActionCreator(postText));
-  };
-
   return (
-    <MyPosts
-      posts={state.profilePage.posts}
-      newPostText={state.profilePage.newPostText}
-      updateNewPostText={onPostChange}
-      addPost={addPost}
-    />
+    <StoreContext.Consumer>
+      { (store) => {
+        const state = store.getState();
+
+        const addPost = () => {
+          store.dispatch(addPostActionCreator());
+          store.dispatch(updateNewPostTextActionCreator(""));
+        };
+
+        const onPostChange = (postText) => {
+          store.dispatch(updateNewPostTextActionCreator(postText));
+        };
+
+        return (
+          <MyPosts
+            posts={state.profilePage.posts}
+            newPostText={state.profilePage.newPostText}
+            updateNewPostText={onPostChange}
+            addPost={addPost}
+          />
+        );
+      }}
+    </StoreContext.Consumer>
   );
 };
 

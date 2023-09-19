@@ -1,17 +1,15 @@
 import React from "react";
 import s from "./Dialogs.module.css";
-import DialogItem from "../DialogItem/DialogItem";
 import MessagesContainer from "../Messages/MessagesContainer";
+import DialogsContainer from "./DialogsContainer";
 
-const Dialogs = (props) => {
-  const dialogsElements = props.state.dialogs.map((d) => (
-    <DialogItem dialogData={d} />
-  ));
+const Dialogs = () => {
+  
 
   return (
     <div className={s.dialogs}>
-      <div className={s.dialogsItems}>{dialogsElements}</div>
-      <MessagesContainer store={props.store}/>
+      <DialogsContainer />
+      <MessagesContainer/>
     </div>
   );
 };
