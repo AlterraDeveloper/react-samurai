@@ -4,8 +4,6 @@ import MessagesContainer from "../Messages/MessagesContainer";
 import DialogsContainer from "./DialogsContainer";
 
 const Dialogs = () => {
-  
-
   return (
     <div className={s.dialogs}>
       <DialogsContainer />

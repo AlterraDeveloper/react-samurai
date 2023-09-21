@@ -1,20 +1,17 @@
 import React from "react";
-import DialogItem from "../DialogItem/DialogItem";
-import { StoreContext } from "../../StoreContext";
-import s from "./DialogsContainer.module.css";
+import DialogItems from "../DialogItems/DialogItems";
+import { connect } from "react-redux";
 
-const DialogsContainer = () => {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        const dialogsElements = store
-          .getState()
-          .dialogsPage.dialogs.map((d) => <DialogItem dialogData={d} />);
-
-        return <div className={s.dialogsItems}>{dialogsElements}</div>;
-      }}
-    </StoreContext.Consumer>
-  );
+let mapStateToProps = (state) => {
+  return {
+    dialogs: state.dialogsPage.dialogs
+  };
 };
+
+let mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(DialogItems);
 
 export default DialogsContainer;
