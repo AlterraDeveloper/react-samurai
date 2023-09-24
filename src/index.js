@@ -7,18 +7,14 @@ import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const rerenderEntireTree = () => {
-  root.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
-  );
-};
+// const rerenderEntireTree = () => {
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+// };
 
-rerenderEntireTree();
-
-store.subscribe(() => {
-  rerenderEntireTree();
-});
+// rerenderEntireTree();
