@@ -39,20 +39,23 @@ const initialState = {
 };
 
 export const dialogsReducer = (state = initialState, action) => {
-
-  const stateCopy = structuredClone(state);
-
   switch (action.type) {
     case ADD_MESSAGE:
       if (!state.newMessageText) return state;
 
-      stateCopy.messages.push({
+      const newMessage = {
         message: state.newMessageText,
-      });
-      return stateCopy;
+      };
+
+      return {
+        ...state,
+        messages: [...state.messages, newMessage],
+      };
     case UPDATE_NEW_MESSAGE_TEXT:
-      stateCopy.newMessageText = action.newMessageText;
-      return stateCopy;
+      return {
+        ...state,
+        newMessageText: action.newMessageText,
+      };
     default:
       return state;
   }

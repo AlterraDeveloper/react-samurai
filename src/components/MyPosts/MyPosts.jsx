@@ -3,7 +3,7 @@ import s from "./MyPosts.module.css";
 import Post from "../Post/Post";
 
 const MyPosts = (props) => {
-  const postsElements = props.posts.map((p) => <Post postData={p}></Post>);
+  const postsElements = props.posts.map((p) => <Post postData={p} key={p.id}></Post>);
 
   const addPost = () => {
     props.addPost();

@@ -1,3 +1,5 @@
+import { getRandomIntInRange } from "../helpers";
+
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
@@ -32,23 +34,27 @@ const initialState = {
 };
 
 export const profileReducer = (state = initialState, action) => {
-  const stateCopy = structuredClone(state);
-
   switch (action.type) {
     case ADD_POST:
       const newPost = {
         id: 5,
         message: state.newPostText,
         likesCount: 0,
-        imgUrl: "https://randomuser.me/api/portraits/men/65.jpg",
+        imgUrl: `https://randomuser.me/api/portraits/men/${getRandomIntInRange(
+          1,
+          99
+        )}.jpg`,
       };
-      stateCopy.posts.push(newPost);
-      stateCopy.newPostText = "";
-      return stateCopy;
+      return {
+        ...state,
+        posts: [...state.posts, newPost],
+        newPostText: "",
+      };
     case UPDATE_NEW_POST_TEXT:
-      stateCopy.newPostText = action.newText;
-      return stateCopy;
-
+      return {
+        ...state,
+        newPostText: action.newText,
+      };
     default:
       return state;
   }

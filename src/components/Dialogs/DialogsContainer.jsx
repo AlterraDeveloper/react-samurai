@@ -1,4 +1,3 @@
-import React from "react";
 import DialogItems from "../DialogItems/DialogItems";
 import { connect } from "react-redux";
 
