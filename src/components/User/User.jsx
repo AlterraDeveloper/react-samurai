@@ -16,12 +16,12 @@ const User = (props) => {
       </div>
       <div className={s.rightBlock}>
         <div className={s.userInfo}>
-          <span>{props.user.getDisplayName()}</span>
+          <span>{props.user.userName}</span>
           <span>{props.user.userStatus}</span>
         </div>
         <div className={s.userLocation}>
-          <span>{props.user.userLocation.country},</span>
-          <span>{props.user.userLocation.city}</span>
+          {/* <span>{props.user.userLocation.country},</span>
+          <span>{props.user.userLocation.city}</span> */}
         </div>
       </div>
     </div>

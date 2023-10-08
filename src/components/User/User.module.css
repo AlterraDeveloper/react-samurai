@@ -19,6 +19,8 @@
 .leftBlock img {
 	border-radius: 100px;
 	margin-bottom: 5px;
+	width: 180px;
+	height: 180px;
 }
 
 .rightBlock {
