@@ -1,11 +1,10 @@
 import React from "react";
 import s from "./Messages.module.css";
 import Message from "../Message/Message";
-import { getRandomIntInRange } from "../../helpers";
 
 const Messages = (props) => {
   const messagesElements = props.messages.map((m, idx) => (
-    <Message message={m.message} key={idx} idx={getRandomIntInRange(0, 100)} />
+    <Message message={m.message} key={idx} />
   ));
 
   const onSendMessage = () => {

@@ -1,0 +1,52 @@
+.userBlock {
+	width: 100%;
+	height: 10%;
+	padding: 30px;
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+}
+
+.userBlock+.userBlock {
+	margin-top: 10px;
+}
+
+.leftBlock {
+	display: flex;
+	flex-direction: column;
+}
+
+.leftBlock img {
+	border-radius: 100px;
+	margin-bottom: 5px;
+}
+
+.rightBlock {
+	border: 4px solid #6e6969;
+	border-radius: 10px;
+	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+}
+
+.userInfo{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.userInfo span:nth-child(1){
+	font-size: 2em;
+	font-weight: 700;
+}
+
+.userInfo span:nth-child(2){
+	font-size: 1.25em;
+}
+
+.userLocation{
+	display: flex;
+	flex-direction: column;
+	font-size: 2em;
+}
