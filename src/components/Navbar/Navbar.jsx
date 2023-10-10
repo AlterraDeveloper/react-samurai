@@ -5,16 +5,31 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <nav className={s.nav}>
-      <div>
-        <NavLink to="/profile">Profile</NavLink>
+      <div className={s.item}>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) => (isActive ? `${s.activeLink} ${s.link}` : s.link)}
+        >
+          Profile
+        </NavLink>
       </div>
-      <div>
-        <NavLink to="/messages">Messages</NavLink>
+      <div className={s.item}>
+        <NavLink
+          to="/messages"
+          className={({ isActive }) => (isActive ? `${s.activeLink} ${s.link}` : s.link)}
+        >
+          Messages
+        </NavLink>
       </div>
-      <div>
-        <NavLink to="/users">Users</NavLink>
+      <div className={s.item}>
+        <NavLink
+          to="/users"
+          className={({ isActive }) => (isActive ? `${s.activeLink} ${s.link}` : s.link)}
+        >
+          Users
+        </NavLink>
       </div>
-      <div>
+      {/* <div>
         <a>News</a>
       </div>
       <div>
@@ -22,7 +37,7 @@ const Navbar = () => {
       </div>
       <div>
         <a>Settings</a>
-      </div>
+      </div> */}
     </nav>
   );
 };
