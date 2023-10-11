@@ -23,11 +23,11 @@
 }
 
 .activeLink {
-	transform: translateX();
-	padding: 20px;
+	padding: 10px;
 	width: 100%;
-	border-bottom: 5px solid black;
+	border-bottom: 7px solid black;
 	text-align: center;
+	font-weight: 700;
 }
 
 .link {
