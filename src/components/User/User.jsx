@@ -1,11 +1,12 @@
 import React from "react";
 import s from "./User.module.css";
+import userPhoto from "../../assets/images/user.png";
 
 const User = (props) => {
   return (
     <div className={s.userBlock}>
       <div className={s.leftBlock}>
-        <img src={props.user.userIcon} alt="" />
+        <img src={props.user.userIcon ?? userPhoto} alt="" />
         {props.user.followed ? (
           <button onClick={() => props.unfollow(props.user.id)}>
             unfollow
@@ -20,8 +21,6 @@ const User = (props) => {
           <span>{props.user.userStatus}</span>
         </div>
         <div className={s.userLocation}>
-          {/* <span>{props.user.userLocation.country},</span>
-          <span>{props.user.userLocation.city}</span> */}
         </div>
       </div>
     </div>

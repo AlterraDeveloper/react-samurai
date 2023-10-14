@@ -1,5 +1,5 @@
+import React from "react";
 import { connect } from "react-redux";
-import UsersList from "./UsersList";
 import {
   followActionCreator,
   getUsersActionCreator,
@@ -7,6 +7,70 @@ import {
   setTotalUsersCountActionCreator,
   unfollowActionCreator,
 } from "../../redux/usersReducer";
+import axios from "axios";
+import { UsersList } from "./UsersList";
+
+class UsersAPIComponent extends React.Component {
+  componentDidMount() {
+    axios
+      .get("https://social-network.samuraijs.com/api/1.0/users", {
+        params: {
+          page: this.props.currentPage,
+          count: this.props.pageSize,
+        },
+      })
+      .then((response) => {
+        const apiUsers = response.data.items;
+        this.props.getUsers(
+          apiUsers.map((user) => ({
+            id: user.id,
+            userName: user.name,
+            userIcon: user.photos.small,
+            userStatus: user.status,
+            followed: user.followed,
+          }))
+        );
+        this.props.setUsersTotalCount(response.data.totalCount);
+      });
+  }
+
+  onPageChanged = (page) => {
+    this.props.setPage(page);
+    axios
+      .get("https://social-network.samuraijs.com/api/1.0/users", {
+        params: {
+          page: page,
+          count: this.props.pageSize,
+        },
+      })
+      .then((response) => {
+        const apiUsers = response.data.items;
+        this.props.getUsers(
+          apiUsers.map((user) => ({
+            id: user.id,
+            userName: user.name,
+            userIcon: user.photos.small,
+            userStatus: user.status,
+            followed: user.followed,
+          }))
+        );
+      });
+  };
+
+  render() {
+    return (
+      <UsersList
+        users={this.props.users}
+        totalUsersCount={this.props.totalUsersCount}
+        pageSize={this.props.pageSize}
+        currentPage={this.props.currentPage}
+        onPageChanged={this.onPageChanged}
+        follow={this.props.follow}
+        unfollow={this.props.unfollow}
+      />
+    );
+  }
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -40,6 +104,6 @@ const mapDispatchToProps = (dispatch) => {
 const UsersListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UsersList);
+)(UsersAPIComponent);
 
 export default UsersListContainer;
