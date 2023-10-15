@@ -1,6 +1,8 @@
 import React from "react";
 import s from "./UsersList.module.css";
 import User from "../User/User";
+import loaderSvg from "../../assets/grid.svg"
+import { Preloader } from "../Preloader/Preloader";
 
 export const UsersList = (props) => {
   const users = props.users.map((u) => (
@@ -22,7 +24,7 @@ export const UsersList = (props) => {
   }
 
   return (
-    <div>
+    <div className={s.usersList}>
       <div className={s.pages}>
         {pages.map((page) => {
           const classes = `${s.page} ${
@@ -39,7 +41,11 @@ export const UsersList = (props) => {
           );
         })}
       </div>
-      <div className={s.users}>{users}</div>
+      {props.isUsersLoading ? (
+        <Preloader/>
+      ) : (
+        <div className={s.users}>{users}</div>
+      )}
     </div>
   );
 };

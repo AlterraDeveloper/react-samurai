@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   followActionCreator,
   getUsersActionCreator,
+  setIsUsersLoading,
   setPageActionCreator,
   setTotalUsersCountActionCreator,
   unfollowActionCreator,
@@ -12,6 +13,7 @@ import { UsersList } from "./UsersList";
 
 class UsersAPIComponent extends React.Component {
   componentDidMount() {
+    this.props.setIsUsersLoading(true);
     axios
       .get("https://social-network.samuraijs.com/api/1.0/users", {
         params: {
@@ -31,11 +33,15 @@ class UsersAPIComponent extends React.Component {
           }))
         );
         this.props.setUsersTotalCount(response.data.totalCount);
+      })
+      .finally(() => {
+        this.props.setIsUsersLoading(false);
       });
   }
 
   onPageChanged = (page) => {
     this.props.setPage(page);
+    this.props.setIsUsersLoading(true);
     axios
       .get("https://social-network.samuraijs.com/api/1.0/users", {
         params: {
@@ -54,6 +60,9 @@ class UsersAPIComponent extends React.Component {
             followed: user.followed,
           }))
         );
+      })
+      .finally(() => {
+        this.props.setIsUsersLoading(false);
       });
   };
 
@@ -64,6 +73,7 @@ class UsersAPIComponent extends React.Component {
         totalUsersCount={this.props.totalUsersCount}
         pageSize={this.props.pageSize}
         currentPage={this.props.currentPage}
+        isUsersLoading={this.props.isUsersLoading}
         onPageChanged={this.onPageChanged}
         follow={this.props.follow}
         unfollow={this.props.unfollow}
@@ -78,6 +88,7 @@ const mapStateToProps = (state) => {
     pageSize: state.usersPage.pageSize,
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
+    isUsersLoading: state.usersPage.isUsersLoading
   };
 };
 
@@ -97,6 +108,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setUsersTotalCount: (count) => {
       dispatch(setTotalUsersCountActionCreator(count));
+    },
+    setIsUsersLoading: (isLoading) => {
+      dispatch(setIsUsersLoading(isLoading));
     },
   };
 };
