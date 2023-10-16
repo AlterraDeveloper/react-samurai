@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   followActionCreator,
   getUsersActionCreator,
-  setIsUsersLoading,
+  setIsUsersLoadingActionCreator,
   setPageActionCreator,
   setTotalUsersCountActionCreator,
   unfollowActionCreator,
@@ -33,6 +33,8 @@ class UsersAPIComponent extends React.Component {
           }))
         );
         this.props.setUsersTotalCount(response.data.totalCount);
+      }).catch(error => {
+        console.error("UsersListContainer => ", error);
       })
       .finally(() => {
         this.props.setIsUsersLoading(false);
@@ -60,6 +62,8 @@ class UsersAPIComponent extends React.Component {
             followed: user.followed,
           }))
         );
+      }).catch(error => {
+        console.error("UsersListContainer => ", error);
       })
       .finally(() => {
         this.props.setIsUsersLoading(false);
@@ -88,31 +92,17 @@ const mapStateToProps = (state) => {
     pageSize: state.usersPage.pageSize,
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
-    isUsersLoading: state.usersPage.isUsersLoading
+    isUsersLoading: state.usersPage.isUsersLoading,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    follow: (userId) => {
-      dispatch(followActionCreator(userId));
-    },
-    unfollow: (userId) => {
-      dispatch(unfollowActionCreator(userId));
-    },
-    getUsers: (users) => {
-      dispatch(getUsersActionCreator(users));
-    },
-    setPage: (page) => {
-      dispatch(setPageActionCreator(page));
-    },
-    setUsersTotalCount: (count) => {
-      dispatch(setTotalUsersCountActionCreator(count));
-    },
-    setIsUsersLoading: (isLoading) => {
-      dispatch(setIsUsersLoading(isLoading));
-    },
-  };
+const mapDispatchToProps = {
+  follow: followActionCreator,
+  unfollow: unfollowActionCreator,
+  getUsers: getUsersActionCreator,
+  setPage: setPageActionCreator,
+  setUsersTotalCount: setTotalUsersCountActionCreator,
+  setIsUsersLoading: setIsUsersLoadingActionCreator,
 };
 
 const UsersListContainer = connect(

@@ -85,7 +85,7 @@ export const setTotalUsersCountActionCreator = (count) => ({
   count,
 });
 
-export const setIsUsersLoading = (isLoading) => ({
+export const setIsUsersLoadingActionCreator = (isLoading) => ({
   type: SET_IS_USERS_LOADING,
   isLoading
 })

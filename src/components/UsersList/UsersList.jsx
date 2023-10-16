@@ -1,7 +1,6 @@
 import React from "react";
 import s from "./UsersList.module.css";
 import User from "../User/User";
-import loaderSvg from "../../assets/grid.svg"
 import { Preloader } from "../Preloader/Preloader";
 
 export const UsersList = (props) => {
