@@ -20,6 +20,7 @@ class UsersAPIComponent extends React.Component {
           page: this.props.currentPage,
           count: this.props.pageSize,
         },
+        withCredentials: true,
       })
       .then((response) => {
         const apiUsers = response.data.items;
@@ -33,7 +34,8 @@ class UsersAPIComponent extends React.Component {
           }))
         );
         this.props.setUsersTotalCount(response.data.totalCount);
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.error("UsersListContainer => ", error);
       })
       .finally(() => {
@@ -50,6 +52,7 @@ class UsersAPIComponent extends React.Component {
           page: page,
           count: this.props.pageSize,
         },
+        withCredentials: true,
       })
       .then((response) => {
         const apiUsers = response.data.items;
@@ -62,7 +65,8 @@ class UsersAPIComponent extends React.Component {
             followed: user.followed,
           }))
         );
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.error("UsersListContainer => ", error);
       })
       .finally(() => {
