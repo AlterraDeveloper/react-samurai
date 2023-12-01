@@ -8,22 +8,15 @@ import {
   setTotalUsersCountActionCreator,
   unfollowActionCreator,
 } from "../../redux/usersReducer";
-import axios from "axios";
 import { UsersList } from "./UsersList";
+import { getUsers } from "../../api/api";
 
 class UsersAPIComponent extends React.Component {
   componentDidMount() {
     this.props.setIsUsersLoading(true);
-    axios
-      .get("https://social-network.samuraijs.com/api/1.0/users", {
-        params: {
-          page: this.props.currentPage,
-          count: this.props.pageSize,
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        const apiUsers = response.data.items;
+    getUsers(this.props.currentPage, this.props.pageSize)
+      .then((data) => {
+        const apiUsers = data.items;
         this.props.getUsers(
           apiUsers.map((user) => ({
             id: user.id,
@@ -33,7 +26,7 @@ class UsersAPIComponent extends React.Component {
             followed: user.followed,
           }))
         );
-        this.props.setUsersTotalCount(response.data.totalCount);
+        this.props.setUsersTotalCount(data.totalCount);
       })
       .catch((error) => {
         console.error("UsersListContainer => ", error);
@@ -46,16 +39,9 @@ class UsersAPIComponent extends React.Component {
   onPageChanged = (page) => {
     this.props.setPage(page);
     this.props.setIsUsersLoading(true);
-    axios
-      .get("https://social-network.samuraijs.com/api/1.0/users", {
-        params: {
-          page: page,
-          count: this.props.pageSize,
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        const apiUsers = response.data.items;
+    getUsers(page, this.props.pageSize)
+      .then((data) => {
+        const apiUsers = data.items;
         this.props.getUsers(
           apiUsers.map((user) => ({
             id: user.id,

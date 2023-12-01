@@ -1,6 +1,5 @@
 import React from "react";
 import Profile from "./Profile";
-import axios from "axios";
 import { useParams  } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -8,6 +7,7 @@ import {
   addPostActionCreator,
   updateNewPostTextActionCreator,
 } from "../../redux/profileReducer";
+import { getUserProfile } from "../../api/api";
 
 
 const withRouter = WrappedComponent => props => {
@@ -24,8 +24,7 @@ const withRouter = WrappedComponent => props => {
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${this.props.params.userId}`)
+    getUserProfile(this.props.params.userId)
       .then((response) => {
         this.props.setUserProfile(response.data);
       })
