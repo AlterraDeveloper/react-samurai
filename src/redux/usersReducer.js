@@ -4,13 +4,15 @@ const GET_USERS = "GET_USERS";
 const SET_PAGE = "SET_PAGE";
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 const SET_IS_USERS_LOADING = "SET_IS_USERS_LOADING";
+const SET_FOLLOWINGS_IN_PROGRESS = "SET_FOLLOWINGS_IN_PROGRESS";
 
 const initialState = {
   users: [],
   pageSize: 10,
   totalUsersCount: 0,
   currentPage: 1,
-  isUsersLoading: false
+  isUsersLoading: false,
+  followingsInProgress: [],
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -45,16 +47,28 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         currentPage: action.page,
       };
-      case SET_TOTAL_USERS_COUNT:
-        return {
-          ...state,
-          totalUsersCount: action.count,
-        };
-      case SET_IS_USERS_LOADING:
-        return {
-          ...state,
-          isUsersLoading: action.isLoading
-        }
+    case SET_TOTAL_USERS_COUNT:
+      return {
+        ...state,
+        totalUsersCount: action.count,
+      };
+    case SET_IS_USERS_LOADING:
+      return {
+        ...state,
+        isUsersLoading: action.isLoading,
+      };
+    case SET_FOLLOWINGS_IN_PROGRESS:
+      let newFollowingsInProgress;
+      if (state.followingsInProgress.includes(action.userId)) {
+        newFollowingsInProgress = state.followingsInProgress.filter(
+          (id) => id !== action.userId
+        );
+      } else {
+        newFollowingsInProgress = state.followingsInProgress.concat(
+          action.userId
+        );
+      }
+      return { ...state, followingsInProgress: newFollowingsInProgress };
     default:
       return state;
   }
@@ -87,5 +101,10 @@ export const setTotalUsersCountActionCreator = (count) => ({
 
 export const setIsUsersLoadingActionCreator = (isLoading) => ({
   type: SET_IS_USERS_LOADING,
-  isLoading
-})
+  isLoading,
+});
+
+export const setFollowingsInProgressActionCreator = (userId) => ({
+  type: SET_FOLLOWINGS_IN_PROGRESS,
+  userId,
+});

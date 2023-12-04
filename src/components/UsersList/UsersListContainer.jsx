@@ -7,6 +7,7 @@ import {
   setPageActionCreator,
   setTotalUsersCountActionCreator,
   unfollowActionCreator,
+  setFollowingsInProgressActionCreator
 } from "../../redux/usersReducer";
 import { UsersList } from "./UsersList";
 import { getUsers } from "../../api/api";
@@ -68,9 +69,11 @@ class UsersAPIComponent extends React.Component {
         pageSize={this.props.pageSize}
         currentPage={this.props.currentPage}
         isUsersLoading={this.props.isUsersLoading}
+        followingsInProgress={this.props.followingsInProgress}
         onPageChanged={this.onPageChanged}
         follow={this.props.follow}
         unfollow={this.props.unfollow}
+        setFollowingsInProgress={this.props.setFollowingsInProgress}
       />
     );
   }
@@ -83,6 +86,7 @@ const mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isUsersLoading: state.usersPage.isUsersLoading,
+    followingsInProgress: state.usersPage.followingsInProgress,
   };
 };
 
@@ -93,6 +97,7 @@ const mapDispatchToProps = {
   setPage: setPageActionCreator,
   setUsersTotalCount: setTotalUsersCountActionCreator,
   setIsUsersLoading: setIsUsersLoadingActionCreator,
+  setFollowingsInProgress: setFollowingsInProgressActionCreator,
 };
 
 const UsersListContainer = connect(

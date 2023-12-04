@@ -8,8 +8,10 @@ export const UsersList = (props) => {
     <User
       key={u.id}
       user={u}
+      followingsInProgress={props.followingsInProgress}
       follow={props.follow}
       unfollow={props.unfollow}
+      setFollowingsInProgress={props.setFollowingsInProgress}
     ></User>
   ));
 

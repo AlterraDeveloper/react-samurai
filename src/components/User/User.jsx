@@ -14,7 +14,7 @@ const User = (props) => {
         {props.user.followed ? (
           <button
             onClick={() => {
-              
+              props.setFollowingsInProgress(props.user.id);
               unfollowUser(props.user.id)
                 .then((response) => {
                   console.log(response);
@@ -24,6 +24,9 @@ const User = (props) => {
                 })
                 .catch((error) => {
                   console.error("UNFOLLOW API => ", error);
+                })
+                .finally(() => {
+                  props.setFollowingsInProgress(false);
                 });
             }}
           >
@@ -31,17 +34,24 @@ const User = (props) => {
           </button>
         ) : (
           <button
+          disabled={props.followingsInProgress.some(id => id === props.user.id)}
             onClick={() => {
-              followUser(props.user.id)
-                .then((response) => {
-                  console.log(response);
-                  if (response.data.resultCode === 0) {
-                    props.follow(props.user.id);
-                  }
-                })
-                .catch((error) => {
-                  console.error("FOLLOW API => ", error);
-                });
+              props.setFollowingsInProgress(props.user.id);
+              setTimeout(() => {
+                followUser(props.user.id)
+                  .then((response) => {
+                    console.log(response);
+                    if (response.data.resultCode === 0) {
+                      props.follow(props.user.id);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("FOLLOW API => ", error);
+                  })
+                  .finally(() => {
+                    props.setFollowingsInProgress(props.user.id);
+                  });
+              }, 3000);
             }}
           >
             follow
