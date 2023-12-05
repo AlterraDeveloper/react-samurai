@@ -1,64 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-  followActionCreator,
-  getUsersActionCreator,
-  setIsUsersLoadingActionCreator,
   setPageActionCreator,
-  setTotalUsersCountActionCreator,
-  unfollowActionCreator,
-  setFollowingsInProgressActionCreator
+  setUsersThunkCreator,
+  unfollowUserThunkCreator,
+  followUserThunkCreator,
 } from "../../redux/usersReducer";
 import { UsersList } from "./UsersList";
-import { getUsers } from "../../api/api";
 
 class UsersAPIComponent extends React.Component {
   componentDidMount() {
-    this.props.setIsUsersLoading(true);
-    getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        const apiUsers = data.items;
-        this.props.getUsers(
-          apiUsers.map((user) => ({
-            id: user.id,
-            userName: user.name,
-            userIcon: user.photos.small,
-            userStatus: user.status,
-            followed: user.followed,
-          }))
-        );
-        this.props.setUsersTotalCount(data.totalCount);
-      })
-      .catch((error) => {
-        console.error("UsersListContainer => ", error);
-      })
-      .finally(() => {
-        this.props.setIsUsersLoading(false);
-      });
+    this.props.setUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (page) => {
     this.props.setPage(page);
-    this.props.setIsUsersLoading(true);
-    getUsers(page, this.props.pageSize)
-      .then((data) => {
-        const apiUsers = data.items;
-        this.props.getUsers(
-          apiUsers.map((user) => ({
-            id: user.id,
-            userName: user.name,
-            userIcon: user.photos.small,
-            userStatus: user.status,
-            followed: user.followed,
-          }))
-        );
-      })
-      .catch((error) => {
-        console.error("UsersListContainer => ", error);
-      })
-      .finally(() => {
-        this.props.setIsUsersLoading(false);
-      });
+    this.props.setUsers(this.props.currentPage, this.props.pageSize);
   };
 
   render() {
@@ -71,9 +28,8 @@ class UsersAPIComponent extends React.Component {
         isUsersLoading={this.props.isUsersLoading}
         followingsInProgress={this.props.followingsInProgress}
         onPageChanged={this.onPageChanged}
-        follow={this.props.follow}
-        unfollow={this.props.unfollow}
-        setFollowingsInProgress={this.props.setFollowingsInProgress}
+        followUser={this.props.followUser}
+        unfollowUser={this.props.unfollowUser}
       />
     );
   }
@@ -83,21 +39,18 @@ const mapStateToProps = (state) => {
   return {
     users: state.usersPage.users,
     pageSize: state.usersPage.pageSize,
+    isUsersLoading: state.usersPage.isUsersLoading,
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
-    isUsersLoading: state.usersPage.isUsersLoading,
     followingsInProgress: state.usersPage.followingsInProgress,
   };
 };
 
 const mapDispatchToProps = {
-  follow: followActionCreator,
-  unfollow: unfollowActionCreator,
-  getUsers: getUsersActionCreator,
   setPage: setPageActionCreator,
-  setUsersTotalCount: setTotalUsersCountActionCreator,
-  setIsUsersLoading: setIsUsersLoadingActionCreator,
-  setFollowingsInProgress: setFollowingsInProgressActionCreator,
+  setUsers: setUsersThunkCreator,
+  unfollowUser: unfollowUserThunkCreator,
+  followUser: followUserThunkCreator
 };
 
 const UsersListContainer = connect(

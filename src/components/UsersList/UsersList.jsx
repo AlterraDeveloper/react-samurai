@@ -9,9 +9,8 @@ export const UsersList = (props) => {
       key={u.id}
       user={u}
       followingsInProgress={props.followingsInProgress}
-      follow={props.follow}
-      unfollow={props.unfollow}
-      setFollowingsInProgress={props.setFollowingsInProgress}
+      followUser={props.followUser}
+      unfollowUser={props.unfollowUser}
     ></User>
   ));
 

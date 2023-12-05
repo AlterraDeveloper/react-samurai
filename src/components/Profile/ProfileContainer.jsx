@@ -7,7 +7,7 @@ import {
   addPostActionCreator,
   updateNewPostTextActionCreator,
 } from "../../redux/profileReducer";
-import { getUserProfile } from "../../api/api";
+import { SocialNetworkAPI } from "../../api/api";
 
 
 const withRouter = WrappedComponent => props => {
@@ -24,7 +24,7 @@ const withRouter = WrappedComponent => props => {
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    getUserProfile(this.props.params.userId)
+    SocialNetworkAPI.getUserProfile(this.props.params.userId)
       .then((response) => {
         this.props.setUserProfile(response.data);
       })

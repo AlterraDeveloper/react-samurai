@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const Header = (props) => {
 	return <header className={s.header}>
 		<div className={s.loginBlock}>
-			<NavLink to={"/login"}>{props.userId ? `Hello, ${props.auth.login}` : "Login"}</NavLink>
+			<NavLink to={"/login"}>{props.auth.userId ? `Hello, ${props.auth.login}` : "Login"}</NavLink>
 		</div>
 	</header>
 }

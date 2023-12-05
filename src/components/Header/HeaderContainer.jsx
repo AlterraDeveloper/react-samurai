@@ -2,11 +2,11 @@ import React from "react";
 import Header from "./Header";
 import { setAuthUserDataActionCreator } from "../../redux/authReducer";
 import { connect } from "react-redux";
-import { authMe } from "../../api/api";
+import { SocialNetworkAPI } from "../../api/api";
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    authMe()
+    SocialNetworkAPI.authMe()
       .then((response) => {
         if (response.data.resultCode === 0) {
           const { id: userId, login, email } = { ...response.data.data };

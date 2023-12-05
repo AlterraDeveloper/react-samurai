@@ -1,6 +1,8 @@
+import { SocialNetworkAPI } from "../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
-const GET_USERS = "GET_USERS";
+const SET_USERS = "SET_USERS";
 const SET_PAGE = "SET_PAGE";
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 const SET_IS_USERS_LOADING = "SET_IS_USERS_LOADING";
@@ -8,7 +10,7 @@ const SET_FOLLOWINGS_IN_PROGRESS = "SET_FOLLOWINGS_IN_PROGRESS";
 
 const initialState = {
   users: [],
-  pageSize: 10,
+  pageSize: 25,
   totalUsersCount: 0,
   currentPage: 1,
   isUsersLoading: false,
@@ -37,7 +39,7 @@ export const usersReducer = (state = initialState, action) => {
           return u;
         }),
       };
-    case GET_USERS:
+    case SET_USERS:
       return {
         ...state,
         users: [...action.users],
@@ -84,8 +86,8 @@ export const unfollowActionCreator = (userId) => ({
   userId,
 });
 
-export const getUsersActionCreator = (users) => ({
-  type: GET_USERS,
+export const setUsersActionCreator = (users) => ({
+  type: SET_USERS,
   users,
 });
 
@@ -108,3 +110,64 @@ export const setFollowingsInProgressActionCreator = (userId) => ({
   type: SET_FOLLOWINGS_IN_PROGRESS,
   userId,
 });
+
+export const setUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+  dispatch(setIsUsersLoadingActionCreator(true));
+
+  SocialNetworkAPI.getUsers(currentPage, pageSize)
+    .then((data) => {
+      const apiUsers = data.items;
+      dispatch(
+        setUsersActionCreator(
+          apiUsers.map((user) => ({
+            id: user.id,
+            userName: user.name,
+            userIcon: user.photos.small,
+            userStatus: user.status,
+            followed: user.followed,
+          }))
+        )
+      );
+      dispatch(setTotalUsersCountActionCreator(data.totalCount));
+    })
+    .catch((error) => {
+      console.error("Get users error => ", error);
+    })
+    .finally(() => {
+      dispatch(setIsUsersLoadingActionCreator(false));
+    });
+};
+
+export const unfollowUserThunkCreator = (userId) => (dispatch) => {
+  dispatch(setFollowingsInProgressActionCreator(userId));
+  SocialNetworkAPI.unfollowUser(userId)
+    .then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(unfollowActionCreator(userId));
+      }
+    })
+    .catch((error) => {
+      console.error("Unfollow user error => ", error);
+    })
+    .finally(() => {
+      dispatch(setFollowingsInProgressActionCreator(userId));
+    });
+};
+
+
+
+export const followUserThunkCreator = (userId) => (dispatch) => {
+  dispatch(setFollowingsInProgressActionCreator(userId));
+  SocialNetworkAPI.followUser(userId)
+    .then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(followActionCreator(userId));
+      }
+    })
+    .catch((error) => {
+      console.error("Follow user error => ", error);
+    })
+    .finally(() => {
+      dispatch(setFollowingsInProgressActionCreator(userId));
+    });
+};
