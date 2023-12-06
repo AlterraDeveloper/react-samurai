@@ -3,11 +3,10 @@ import Profile from "./Profile";
 import { useParams  } from "react-router-dom";
 import { connect } from "react-redux";
 import {
-  setUserProfileActionCreator,
   addPostActionCreator,
   updateNewPostTextActionCreator,
+  setUserProfileThunkCreator,
 } from "../../redux/profileReducer";
-import { SocialNetworkAPI } from "../../api/api";
 
 
 const withRouter = WrappedComponent => props => {
@@ -24,14 +23,8 @@ const withRouter = WrappedComponent => props => {
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    SocialNetworkAPI.getUserProfile(this.props.params.userId)
-      .then((response) => {
-        this.props.setUserProfile(response.data);
-      })
-      .catch((error) => {
-        console.error("ProfileContainer => ", error);
-      })
-      .finally(() => {});
+    this.props.setUserProfile(this.props.params.userId);
+   
   }
 
   render() {
@@ -44,7 +37,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  setUserProfile: setUserProfileActionCreator,
+  setUserProfile: setUserProfileThunkCreator,
   addPost: addPostActionCreator,
   updateNewPostText: updateNewPostTextActionCreator,
 })(withRouter(ProfileContainer));

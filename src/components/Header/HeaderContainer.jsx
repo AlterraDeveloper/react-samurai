@@ -1,24 +1,11 @@
 import React from "react";
 import Header from "./Header";
-import { setAuthUserDataActionCreator } from "../../redux/authReducer";
+import { setAuthUserDataThunkCreator } from "../../redux/authReducer";
 import { connect } from "react-redux";
-import { SocialNetworkAPI } from "../../api/api";
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    SocialNetworkAPI.authMe()
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          const { id: userId, login, email } = { ...response.data.data };
-          this.props.setUserData(userId, email, login);
-        } else {
-          this.props.setUserData(null, null, "Eugene");
-        }
-      })
-      .catch((error) => {
-        console.error("HeaderContainer => ", error);
-      })
-      .finally(() => {});
+    this.props.setUserData();
   }
 
   render() {
@@ -33,7 +20,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setUserData: setAuthUserDataActionCreator,
+  setUserData: setAuthUserDataThunkCreator,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

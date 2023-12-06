@@ -1,4 +1,5 @@
 import { getRandomIntInRange } from "../helpers";
+import { SocialNetworkAPI } from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
@@ -42,11 +43,12 @@ export const profileReducer = (state = initialState, action) => {
         id: 5,
         message: state.newPostText,
         likesCount: 0,
-        imgUrl: state.userProfile?.photos.small ??
-         `https://randomuser.me/api/portraits/men/${getRandomIntInRange(
-          1,
-          99
-        )}.jpg`,
+        imgUrl:
+          state.userProfile?.photos.small ??
+          `https://randomuser.me/api/portraits/men/${getRandomIntInRange(
+            1,
+            99
+          )}.jpg`,
       };
       return {
         ...state,
@@ -79,3 +81,13 @@ export const setUserProfileActionCreator = (userProfile) => ({
   type: SET_USER_PROFILE,
   userProfile,
 });
+
+export const setUserProfileThunkCreator = (userId) => (dispatch) => {
+  SocialNetworkAPI.getUserProfile(userId)
+    .then((response) => {
+      dispatch(setUserProfileActionCreator(response.data));
+    })
+    .catch((error) => {
+      console.error("Get user profile error => ", error);
+    });
+};

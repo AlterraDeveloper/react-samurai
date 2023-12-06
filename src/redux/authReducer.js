@@ -1,3 +1,5 @@
+import { SocialNetworkAPI } from "../api/api";
+
 const SET_USER_DATA = "SET_USER_DATA";
 
 const initialState = {
@@ -24,6 +26,21 @@ export const setAuthUserDataActionCreator = (userId, email, login) => ({
   data: {
     userId,
     email,
-    login
+    login,
   },
 });
+
+export const setAuthUserDataThunkCreator = () => (dispatch) => {
+  SocialNetworkAPI.authMe()
+    .then((response) => {
+      if (response.data.resultCode === 0) {
+        const { id: userId, login, email } = { ...response.data.data };
+        dispatch(setAuthUserDataActionCreator(userId, email, login));
+      } else {
+        dispatch(setAuthUserDataActionCreator(30452, null, "Eugene"));
+      }
+    })
+    .catch((error) => {
+      console.error("Set auth user error => ", error);
+    });
+};
