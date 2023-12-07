@@ -6,7 +6,7 @@ const initialState = {
   userId: null,
   login: null,
   email: null,
-  isFetching: false,
+  isAuth: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -15,6 +15,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.data,
+        isAuth: true,
       };
     default:
       return state;
@@ -36,8 +37,6 @@ export const setAuthUserDataThunkCreator = () => (dispatch) => {
       if (response.data.resultCode === 0) {
         const { id: userId, login, email } = { ...response.data.data };
         dispatch(setAuthUserDataActionCreator(userId, email, login));
-      } else {
-        dispatch(setAuthUserDataActionCreator(30452, null, "Eugene"));
       }
     })
     .catch((error) => {

@@ -5,8 +5,9 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import Users from "./components/Users/Users";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 
-function App(props) {
+function App() {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -19,12 +20,20 @@ function App(props) {
               element={<ProfileContainer />}
             />
             <Route
+              path="/profile"
+              element={<ProfileContainer />}
+            />
+            <Route
               path="/messages"
               element={<Dialogs />}
             />
             <Route
               path="/users"
               element={<Users />}
+            />
+            <Route
+              path="/login"
+              element={<Login />}
             />
           </Routes>
         </div>
