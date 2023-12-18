@@ -4,6 +4,7 @@ import { SocialNetworkAPI } from "../api/api";
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 const initialState = {
   posts: [
@@ -34,6 +35,7 @@ const initialState = {
   ],
   newPostText: "",
   userProfile: null,
+  status: "",
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -65,6 +67,11 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         userProfile: action.userProfile,
       };
+    case SET_STATUS:
+      return {
+        ...state,
+        status: action.status,
+      };
     default:
       return state;
   }
@@ -82,6 +89,11 @@ export const setUserProfileActionCreator = (userProfile) => ({
   userProfile,
 });
 
+export const setStatusActionCreator = (status) => ({
+  type: SET_STATUS,
+  status,
+});
+
 export const setUserProfileThunkCreator = (userId) => (dispatch) => {
   SocialNetworkAPI.getUserProfile(userId)
     .then((response) => {
@@ -89,5 +101,27 @@ export const setUserProfileThunkCreator = (userId) => (dispatch) => {
     })
     .catch((error) => {
       console.error("Get user profile error => ", error);
+    });
+};
+
+export const setStatusThunkCreator = (status) => (dispatch) => {
+  SocialNetworkAPI.updateUserProfileStatus(status)
+  .then(response => {
+    if(response.data.resultCode === 0){
+      dispatch(setStatusActionCreator(status));
+    }
+  })
+    .catch((error) => {
+      console.error("Update status error => ", error);
+    });
+};
+
+export const getStatusThunkCreator = (userId) => (dispatch) => {
+  SocialNetworkAPI.getUserProfileStatus(userId)
+    .then((response) => {
+      dispatch(setStatusActionCreator(response.data));
+    })
+    .catch((error) => {
+      console.error("Get status error => ", error);
     });
 };

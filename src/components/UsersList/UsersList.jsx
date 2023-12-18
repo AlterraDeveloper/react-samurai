@@ -33,7 +33,9 @@ export const UsersList = (props) => {
           return (
             <span
               key={page}
-              onClick={() => props.onPageChanged(page)}
+              onClick={(event) => {
+                props.onPageChanged(Number(event.target.innerText));
+              }}
               className={classes}
             >
               {page}
@@ -42,7 +44,7 @@ export const UsersList = (props) => {
         })}
       </div>
       {props.isUsersLoading ? (
-        <Preloader/>
+        <Preloader />
       ) : (
         <div className={s.users}>{users}</div>
       )}

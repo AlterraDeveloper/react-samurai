@@ -5,7 +5,7 @@ const socialNetworkApi = axios.create({
   withCredentials: true,
   headers: {
     "API-KEY": "9cebe972-9f60-4460-94e5-2d7054eec31d",
-  }
+  },
 });
 
 export const SocialNetworkAPI = {
@@ -21,9 +21,17 @@ export const SocialNetworkAPI = {
 
   authMe: () => socialNetworkApi.get("/auth/me"),
 
-  getUserProfile: (userId) => socialNetworkApi.get(`/profile/${userId}`),
-
   followUser: (userId) => socialNetworkApi.post(`/follow/${userId}`, null),
 
   unfollowUser: (userId) => socialNetworkApi.delete(`/follow/${userId}`),
+
+  getUserProfile: (userId) => socialNetworkApi.get(`/profile/${userId}`),
+
+  getUserProfileStatus: (userId) =>
+    socialNetworkApi.get(`/profile/status/${userId}`),
+
+  updateUserProfileStatus: (statusMessage) =>
+    socialNetworkApi.put("/profile/status", {
+      status: statusMessage.slice(0, 300),
+    }),
 };

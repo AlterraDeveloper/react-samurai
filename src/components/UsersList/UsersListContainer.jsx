@@ -15,7 +15,7 @@ class UsersAPIComponent extends React.Component {
 
   onPageChanged = (page) => {
     this.props.setPage(page);
-    this.props.setUsers(this.props.currentPage, this.props.pageSize);
+    this.props.setUsers(page, this.props.pageSize);
   };
 
   render() {

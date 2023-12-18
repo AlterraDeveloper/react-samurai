@@ -5,6 +5,8 @@ import {
   addPostActionCreator,
   updateNewPostTextActionCreator,
   setUserProfileThunkCreator,
+  setStatusThunkCreator,
+  getStatusThunkCreator
 } from "../../redux/profileReducer";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { withRouter } from "../../hoc/withRouter";
@@ -15,11 +17,10 @@ class ProfileContainer extends React.Component {
     this.props.setUserProfile(
       this.props.params.userId ?? this.props.authData.userId
     );
+    this.props.getUserStatus(this.props.params.userId ?? this.props.authData.userId)
   }
 
   render() {
-    // if (!this.props.authData.isAuth) return <Navigate to="/login" />;
-
     return <Profile {...this.props} />;
   }
 }
@@ -32,6 +33,8 @@ const mapDispatchToProps = {
   setUserProfile: setUserProfileThunkCreator,
   addPost: addPostActionCreator,
   updateNewPostText: updateNewPostTextActionCreator,
+  updateUserStatus: setStatusThunkCreator,
+  getUserStatus: getStatusThunkCreator
 };
 
 export default compose(
