@@ -34,4 +34,13 @@ export const SocialNetworkAPI = {
     socialNetworkApi.put("/profile/status", {
       status: statusMessage.slice(0, 300),
     }),
+
+  authLogin: (data) => socialNetworkApi.post("auth/login", {
+    email: data.login,
+    password: data.password,
+    rememberMe: data.rememberMe,
+    captcha: false
+  }),
+
+  authLogout: () => socialNetworkApi.post("auth/logout", null)
 };

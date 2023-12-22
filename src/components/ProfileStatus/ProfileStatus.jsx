@@ -6,6 +6,14 @@ export default class ProfileStatus extends React.Component {
     status: this.props.userStatus,
   };
 
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.status !== this.props.status){
+      this.setState({
+        status: this.props.status
+      })
+    }
+  }
+
   activateEditMode = () => {
     this.setState({
       editMode: true,

@@ -1,30 +1,23 @@
 import React from "react";
 import s from "./Messages.module.css";
 import Message from "../Message/Message";
+import MessageForm from "./MessageForm";
 
 const Messages = (props) => {
   const messagesElements = props.messages.map((m, idx) => (
-    <Message message={m.message} key={idx} />
+    <Message message={m} key={idx} />
   ));
 
-  const onSendMessage = () => {
-    props.sendMessage();
-    props.changeMessageText("");
+  const sendMessage = (data) => {
+    props.sendMessage(data.newMessageText);
   };
 
-  const onMessageTextChanged = (event) => {
-    props.changeMessageText(event.target.value);
-  };
 
   return (
     <div className={s.messageContainer}>
       <div className={s.messages}>{messagesElements}</div>
       <div className={s.messageForm}>
-        <textarea
-          value={props.newMessageText}
-          onChange={onMessageTextChanged}
-        ></textarea>
-        <button onClick={onSendMessage}>Send message</button>
+        <MessageForm onSubmit={sendMessage} />
       </div>
     </div>
   );

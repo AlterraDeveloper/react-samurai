@@ -2,7 +2,6 @@ import { getRandomIntInRange } from "../helpers";
 import { SocialNetworkAPI } from "../api/api";
 
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
@@ -33,7 +32,6 @@ const initialState = {
       imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
     },
   ],
-  newPostText: "",
   userProfile: null,
   status: "",
 };
@@ -43,7 +41,7 @@ export const profileReducer = (state = initialState, action) => {
     case ADD_POST:
       const newPost = {
         id: 5,
-        message: state.newPostText,
+        message: action.newPostText,
         likesCount: 0,
         imgUrl:
           state.userProfile?.photos.small ??
@@ -56,11 +54,6 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         posts: [...state.posts, newPost],
         newPostText: "",
-      };
-    case UPDATE_NEW_POST_TEXT:
-      return {
-        ...state,
-        newPostText: action.newText,
       };
     case SET_USER_PROFILE:
       return {
@@ -77,11 +70,9 @@ export const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPostActionCreator = () => ({ type: ADD_POST });
-
-export const updateNewPostTextActionCreator = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  newText: text,
+export const addPostActionCreator = (newPostText) => ({
+  type: ADD_POST,
+  newPostText,
 });
 
 export const setUserProfileActionCreator = (userProfile) => ({
@@ -106,11 +97,11 @@ export const setUserProfileThunkCreator = (userId) => (dispatch) => {
 
 export const setStatusThunkCreator = (status) => (dispatch) => {
   SocialNetworkAPI.updateUserProfileStatus(status)
-  .then(response => {
-    if(response.data.resultCode === 0){
-      dispatch(setStatusActionCreator(status));
-    }
-  })
+    .then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setStatusActionCreator(status));
+      }
+    })
     .catch((error) => {
       console.error("Update status error => ", error);
     });

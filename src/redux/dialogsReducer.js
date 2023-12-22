@@ -1,18 +1,18 @@
+import { getRandomIntInRange } from "../helpers";
+
 const ADD_MESSAGE = "ADD-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 
 const initialState = {
   messages: [
-    { message: "qwerty" },
-    { message: "qwerty 123" },
-    { message: "qwerty 21321432" },
-    { message: "qwerty test test" },
-    { message: "Hello" },
-    { message: "Hello" },
-    { message: "How are you?" },
-    { message: "Fine, thanks" },
+    { message: "qwerty", isMine: getRandomIntInRange(0, 2) },
+    { message: "qwerty 123", isMine: getRandomIntInRange(0, 2) },
+    { message: "qwerty 21321432", isMine: getRandomIntInRange(0, 2) },
+    { message: "qwerty test test", isMine: getRandomIntInRange(0, 2) },
+    { message: "Hello", isMine: getRandomIntInRange(0, 2) },
+    { message: "Hello", isMine: getRandomIntInRange(0, 2) },
+    { message: "How are you?", isMine: getRandomIntInRange(0, 2) },
+    { message: "Fine, thanks", isMine: getRandomIntInRange(0, 2) },
   ],
-  newMessageText: "",
 
   dialogs: [
     {
@@ -41,31 +41,23 @@ const initialState = {
 export const dialogsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MESSAGE:
-      if (!state.newMessageText) return state;
+      if (!action.newMessageText) return state;
 
       const newMessage = {
-        message: state.newMessageText,
+        message: action.newMessageText,
+        isMine: getRandomIntInRange(0, 2),
       };
 
       return {
         ...state,
         messages: [...state.messages, newMessage],
       };
-    case UPDATE_NEW_MESSAGE_TEXT:
-      return {
-        ...state,
-        newMessageText: action.newMessageText,
-      };
     default:
       return state;
   }
 };
 
-export const addMessageActionCreator = () => ({
+export const addMessageActionCreator = (newMessageText) => ({
   type: ADD_MESSAGE,
-});
-
-export const updateNewMessageTextActionCreator = (text) => ({
-  type: UPDATE_NEW_MESSAGE_TEXT,
-  newMessageText: text,
+  newMessageText,
 });

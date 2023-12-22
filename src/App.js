@@ -15,26 +15,11 @@ function App() {
         <HeaderContainer />
         <div className="app-wrapper-content">
           <Routes>
-            <Route
-              path="/profile/:userId"
-              element={<ProfileContainer />}
-            />
-            <Route
-              path="/profile"
-              element={<ProfileContainer />}
-            />
-            <Route
-              path="/messages"
-              element={<Dialogs />}
-            />
-            <Route
-              path="/users"
-              element={<Users />}
-            />
-            <Route
-              path="/login"
-              element={<Login />}
-            />
+            <Route path="/profile/:userId" element={<ProfileContainer />} />
+            <Route path="/profile" element={<ProfileContainer />} />
+            <Route path="/messages" element={<Dialogs />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
       </div>
