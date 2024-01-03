@@ -34,7 +34,7 @@ export const authReducer = (state = initialState, action) => {
 };
 
 export const loginViaFormActionCreator = (data) => ({
-  type: SET_USER_DATA,
+  type: LOGIN_VIA_FORM,
   data,
 });
 

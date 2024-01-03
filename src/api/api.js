@@ -42,5 +42,5 @@ export const SocialNetworkAPI = {
     captcha: false
   }),
 
-  authLogout: () => socialNetworkApi.post("auth/logout", null)
+  authLogout: () => socialNetworkApi.delete("auth/login")
 };
