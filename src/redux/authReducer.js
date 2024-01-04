@@ -53,7 +53,7 @@ export const setAuthUserDataActionCreator = (userId, email, login) => ({
 });
 
 export const setAuthUserDataThunkCreator = () => (dispatch) => {
-  SocialNetworkAPI.authMe()
+  return SocialNetworkAPI.authMe()
     .then((response) => {
       if (response.data.resultCode === 0) {
         const { id: userId, login, email } = { ...response.data.data };

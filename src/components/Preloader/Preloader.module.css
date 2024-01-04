@@ -1,6 +1,9 @@
-.preLoader{
-	justify-self: center;
-	align-self: center;
-	width: 25%;
-	height: 25%;
+.preLoader {
+  justify-self: center;
+  align-self: center;
+  width: 25%;
+  height: 25%;
+  color: #00bfff;
+  filter: invert(55%) sepia(33%) saturate(3640%) hue-rotate(162deg)
+    brightness(104%) contrast(105%);
 }
