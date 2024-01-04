@@ -1,4 +1,5 @@
 import { SocialNetworkAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
 
 const SET_USER_DATA = "SET_USER_DATA";
 const LOGIN_VIA_FORM = "LOGIN_VIA_FORM";
@@ -74,6 +75,10 @@ export const loginViaFormThunkCreator = (data) => (dispatch) => {
         .then(response => {
           dispatch(setAuthUserDataActionCreator(userId, null, response.data.fullName));
         })
+      }else{
+        dispatch(stopSubmit("login", {
+          _error: response.data.messages.length ? response.data.messages[0] : "Something went wrong"
+        }));
       }
     })
     .catch((error) => {
