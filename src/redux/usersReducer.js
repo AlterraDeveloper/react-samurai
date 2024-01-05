@@ -111,10 +111,10 @@ export const setFollowingsInProgressActionCreator = (userId) => ({
   userId,
 });
 
-export const setUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+export const setUsersThunkCreator = (page, pageSize) => (dispatch) => {
   dispatch(setIsUsersLoadingActionCreator(true));
 
-  SocialNetworkAPI.getUsers(currentPage, pageSize)
+  SocialNetworkAPI.getUsers(page, pageSize)
     .then((data) => {
       const apiUsers = data.items;
       dispatch(

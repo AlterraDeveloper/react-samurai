@@ -7,6 +7,7 @@ import {
   followUserThunkCreator,
 } from "../../redux/usersReducer";
 import { UsersList } from "./UsersList";
+import { getCurrentPage, getFollowingsInProgress, getIsUserLoading, getPageSize, getTotalUsersCount, getUsers } from "../../redux/usersSelectors";
 
 class UsersAPIComponent extends React.Component {
   componentDidMount() {
@@ -37,12 +38,12 @@ class UsersAPIComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    isUsersLoading: state.usersPage.isUsersLoading,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    followingsInProgress: state.usersPage.followingsInProgress,
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    isUsersLoading: getIsUserLoading(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    followingsInProgress: getFollowingsInProgress(state),
   };
 };
 
