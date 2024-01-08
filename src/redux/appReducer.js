@@ -5,6 +5,7 @@ const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS";
 
 const initialState = {
   initialized: false,
+  fake: 0
 };
 
 export const appReducer = (state = initialState, action) => {
@@ -14,6 +15,12 @@ export const appReducer = (state = initialState, action) => {
         ...state,
         initialized: true,
       };
+      case "FAKE":
+        return {
+          ...state,
+          fake: state.fake++
+        }
+
     default:
       return state;
   }
