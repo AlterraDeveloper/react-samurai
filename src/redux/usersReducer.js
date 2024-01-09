@@ -122,7 +122,7 @@ export const setUsersThunkCreator = (page, pageSize) => (dispatch) => {
           apiUsers.map((user) => ({
             id: user.id,
             userName: user.name,
-            userIcon: user.photos.small,
+            userIcon: user.photos.large,
             userStatus: user.status,
             followed: user.followed,
           }))

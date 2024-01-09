@@ -44,7 +44,7 @@ export const profileReducer = (state = initialState, action) => {
         message: action.newPostText,
         likesCount: 0,
         imgUrl:
-          state.userProfile?.photos.small ??
+          state.userProfile?.photos.large ??
           `https://randomuser.me/api/portraits/men/${getRandomIntInRange(
             1,
             99
