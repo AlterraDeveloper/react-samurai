@@ -1,4 +1,3 @@
-import { SocialNetworkAPI } from "../api/api";
 import { setAuthUserDataThunkCreator } from "./authReducer";
 
 const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS";
