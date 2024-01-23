@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -7,11 +7,11 @@ import Users from "./components/Users/Users";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { withRouter } from "./hoc/withRouter";
-import { initialize } from "./redux/appReducer";
-import { Preloader } from "./components/Preloader/Preloader";
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {withRouter} from "./hoc/withRouter";
+import {initialize} from "./redux/appReducer";
+import {Preloader} from "./components/Preloader/Preloader";
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,10 +25,9 @@ class App extends React.Component {
     }
 
     return (
-      <BrowserRouter>
         <div className="app-wrapper">
-          <Navbar />
           <HeaderContainer />
+          <Navbar />
           <div className="app-wrapper-content">
             <Routes>
               <Route path="/profile/:userId" element={<ProfileContainer />} />
@@ -39,7 +38,6 @@ class App extends React.Component {
             </Routes>
           </div>
         </div>
-      </BrowserRouter>
     );
   }
 }

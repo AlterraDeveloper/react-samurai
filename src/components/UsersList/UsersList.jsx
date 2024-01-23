@@ -1,53 +1,31 @@
 import React from "react";
 import s from "./UsersList.module.css";
 import User from "../User/User";
-import { Preloader } from "../Preloader/Preloader";
+import {Preloader} from "../Preloader/Preloader";
+import {Pagination} from "../Pagination/Pagination";
 
 export const UsersList = (props) => {
-  const users = props.users.map((u) => (
-    <User
-      key={u.id}
-      user={u}
-      followingsInProgress={props.followingsInProgress}
-      followUser={props.followUser}
-      unfollowUser={props.unfollowUser}
-    ></User>
-  ));
+    const users = props.users.map((u) => (
+        <User
+            key={u.id}
+            user={u}
+            followingsInProgress={props.followingsInProgress}
+            followUser={props.followUser}
+            unfollowUser={props.unfollowUser}
+        ></User>
+    ));
 
-  const pages = [];
-  const pagesCount = Math.min(
-    Math.ceil(props.totalUsersCount / props.pageSize),
-    10
-  );
-  for (let i = 0; i < pagesCount; i++) {
-    pages.push(i + 1);
-  }
-
-  return (
-    <div className={s.usersList}>
-      <div className={s.pages}>
-        {pages.map((page) => {
-          const classes = `${s.page} ${
-            props.currentPage === page && s.selectedPage
-          }`;
-          return (
-            <span
-              key={page}
-              onClick={(event) => {
-                props.onPageChanged(Number(event.target.innerText));
-              }}
-              className={classes}
-            >
-              {page}
-            </span>
-          );
-        })}
-      </div>
-      {props.isUsersLoading ? (
-        <Preloader />
-      ) : (
-        <div className={s.users}>{users}</div>
-      )}
-    </div>
-  );
+    return (
+        <div className={s.usersList}>
+            <Pagination itemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage}
+                        onPageChanged={props.onPageChanged}/>
+            {props.isUsersLoading ? (
+                <Preloader/>
+            ) : (
+                <div className={s.users}>{users}</div>
+            )}
+            <Pagination itemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage}
+                        onPageChanged={props.onPageChanged}/>
+        </div>
+    );
 };

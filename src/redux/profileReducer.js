@@ -1,129 +1,114 @@
-import { getRandomIntInRange } from "../helpers";
-import { SocialNetworkAPI } from "../api/api";
+import {getRandomIntInRange} from "../helpers";
+import {SocialNetworkAPI} from "../api/api";
 
-const ADD_POST = "ADD-POST";
-const DELETE_POST = "DELETE-POST";
-const SET_USER_PROFILE = "SET_USER_PROFILE";
-const SET_STATUS = "SET_STATUS";
+const ADD_POST = "samurai-network/profile/ADD-POST";
+const DELETE_POST = "samurai-network/profile/DELETE-POST";
+const SET_USER_PROFILE = "samurai-network/profile/SET_USER_PROFILE";
+const SET_STATUS = "samurai-network/profile/SET_STATUS";
 
 const initialState = {
-  posts: [
-    {
-      id: 1,
-      message: "Hi, how are you?",
-      likesCount: 11,
-      imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
-    },
-    {
-      id: 2,
-      message: "how are you?",
-      likesCount: 5,
-      imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
-    },
-    {
-      id: 3,
-      message: "Yo yo",
-      likesCount: 2,
-      imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
-    },
-    {
-      id: 4,
-      message: "Hi",
-      likesCount: 33,
-      imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
-    },
-  ],
-  userProfile: null,
-  status: "",
+    posts: [
+        {
+            id: 1,
+            message: "Hi, how are you?",
+            likesCount: 11,
+            imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
+        },
+        {
+            id: 2,
+            message: "how are you?",
+            likesCount: 5,
+            imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
+        },
+        {
+            id: 3,
+            message: "Yo yo",
+            likesCount: 2,
+            imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
+        },
+        {
+            id: 4,
+            message: "Hi",
+            likesCount: 33,
+            imgUrl: "https://randomuser.me/api/portraits/men/73.jpg",
+        },
+    ],
+    userProfile: null,
+    status: "",
 };
 
 export const profileReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_POST:
-      const newPost = {
-        id: 5,
-        message: action.newPostText,
-        likesCount: 0,
-        imgUrl:
-          state.userProfile?.photos.large ??
-          `https://randomuser.me/api/portraits/men/${getRandomIntInRange(
-            1,
-            99
-          )}.jpg`,
-      };
-      return {
-        ...state,
-        posts: [...state.posts, newPost],
-        newPostText: "",
-      };
-    case SET_USER_PROFILE:
-      return {
-        ...state,
-        userProfile: action.userProfile,
-      };
-    case SET_STATUS:
-      return {
-        ...state,
-        status: action.status,
-      };
-    case DELETE_POST:
-      return{
-        ...state,
-        posts: state.posts.filter(p => p.id !== action.postId)
-      }
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case ADD_POST:
+            const newPost = {
+                id: 5,
+                message: action.newPostText,
+                likesCount: 0,
+                imgUrl:
+                    state.userProfile?.photos.large ??
+                    `https://randomuser.me/api/portraits/men/${getRandomIntInRange(
+                        1,
+                        99
+                    )}.jpg`,
+            };
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: "",
+            };
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                userProfile: action.userProfile,
+            };
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status,
+            };
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+        default:
+            return state;
+    }
 };
 
 export const addPostActionCreator = (newPostText) => ({
-  type: ADD_POST,
-  newPostText,
+    type: ADD_POST,
+    newPostText,
 });
 
 export const deletePostActionCreator = (postId) => ({
-  type: DELETE_POST,
-  postId,
+    type: DELETE_POST,
+    postId,
 });
 
 export const setUserProfileActionCreator = (userProfile) => ({
-  type: SET_USER_PROFILE,
-  userProfile,
+    type: SET_USER_PROFILE,
+    userProfile,
 });
 
 export const setStatusActionCreator = (status) => ({
-  type: SET_STATUS,
-  status,
+    type: SET_STATUS,
+    status,
 });
 
-export const setUserProfileThunkCreator = (userId) => (dispatch) => {
-  SocialNetworkAPI.getUserProfile(userId)
-    .then((response) => {
-      dispatch(setUserProfileActionCreator(response.data));
-    })
-    .catch((error) => {
-      console.error("Get user profile error => ", error);
-    });
+export const setUserProfileThunkCreator = (userId) => async (dispatch) => {
+    const response = await SocialNetworkAPI.getUserProfile(userId);
+    dispatch(setUserProfileActionCreator(response.data));
 };
 
-export const setStatusThunkCreator = (status) => (dispatch) => {
-  SocialNetworkAPI.updateUserProfileStatus(status)
-    .then((response) => {
-      if (response.data.resultCode === 0) {
+export const setStatusThunkCreator = (status) => async (dispatch) => {
+    const response = await SocialNetworkAPI.updateUserProfileStatus(status);
+    if (response.data.resultCode === 0) {
         dispatch(setStatusActionCreator(status));
-      }
-    })
-    .catch((error) => {
-      console.error("Update status error => ", error);
-    });
+    }
 };
 
-export const getStatusThunkCreator = (userId) => (dispatch) => {
-  SocialNetworkAPI.getUserProfileStatus(userId)
-    .then((response) => {
-      dispatch(setStatusActionCreator(response.data));
-    })
-    .catch((error) => {
-      console.error("Get status error => ", error);
-    });
+export const getStatusThunkCreator = (userId) => async (dispatch) => {
+    const response = SocialNetworkAPI.getUserProfileStatus(userId);
+    dispatch(setStatusActionCreator(response.data));
 };

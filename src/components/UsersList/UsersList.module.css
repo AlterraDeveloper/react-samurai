@@ -13,32 +13,3 @@
 	grid-template-rows: 1fr auto;
 }
 
-.page{
-	width: 40px;
-	height: 40px;
-	border: 2px solid black;
-	padding: 5px 15px;
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.page + .page{
-	margin-left: 5px;
-}
-
-.selectedPage{
-	background-color: white;
-	font-weight: 800;
-}
-
-.pages{
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	align-self: start;
-}
-

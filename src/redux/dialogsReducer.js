@@ -1,6 +1,6 @@
 import { getRandomIntInRange } from "../helpers";
 
-const ADD_MESSAGE = "ADD-MESSAGE";
+const ADD_MESSAGE = "samurai-network/dialogs/ADD-MESSAGE";
 
 const initialState = {
   messages: [

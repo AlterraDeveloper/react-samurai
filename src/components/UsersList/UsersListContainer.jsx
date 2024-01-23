@@ -20,7 +20,6 @@ class UsersAPIComponent extends React.Component {
   };
 
   render() {
-    console.log("UsersAPIComponent render");
     return (
       <UsersList
         users={this.props.users}
@@ -38,7 +37,6 @@ class UsersAPIComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("USERS mapStateToProps");
   return {
     users: getUsers(state),
     pageSize: getPageSize(state),

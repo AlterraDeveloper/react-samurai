@@ -1,99 +1,83 @@
-import { SocialNetworkAPI } from "../api/api";
-import { stopSubmit } from "redux-form";
+import {SocialNetworkAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
-const SET_USER_DATA = "SET_USER_DATA";
-const LOGIN_VIA_FORM = "LOGIN_VIA_FORM";
-const LOGOUT = "LOGOUT";
+const SET_USER_DATA = "samurai-network/auth/SET_USER_DATA";
+const LOGIN_VIA_FORM = "samurai-network/auth/LOGIN_VIA_FORM";
+const LOGOUT = "samurai-network/auth/LOGOUT";
 
 const initialState = {
-  userId: null,
-  login: null,
-  email: null,
-  isAuth: false,
+    userId: null,
+    login: null,
+    email: null,
+    isAuth: false,
 };
 
 export const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_USER_DATA:
-    case LOGIN_VIA_FORM:
-      return {
-        ...state,
-        ...action.data,
-        isAuth: true,
-      };
-    case LOGOUT:
-      return {
-        ...state,
-        userId: null,
-        login: null,
-        email: null,
-        isAuth: false,
-      };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case SET_USER_DATA:
+        case LOGIN_VIA_FORM:
+            return {
+                ...state,
+                ...action.data,
+                isAuth: true,
+            };
+        case LOGOUT:
+            return {
+                ...state,
+                userId: null,
+                login: null,
+                email: null,
+                isAuth: false,
+            };
+        default:
+            return state;
+    }
 };
 
 export const loginViaFormActionCreator = (data) => ({
-  type: LOGIN_VIA_FORM,
-  data,
+    type: LOGIN_VIA_FORM,
+    data,
 });
 
 export const logoutActionCreator = () => ({
-  type: LOGOUT,
+    type: LOGOUT,
 });
 
 export const setAuthUserDataActionCreator = (userId, email, login) => ({
-  type: SET_USER_DATA,
-  data: {
-    userId,
-    email,
-    login,
-  },
+    type: SET_USER_DATA,
+    data: {
+        userId,
+        email,
+        login,
+    },
 });
 
-export const setAuthUserDataThunkCreator = () => (dispatch) => {
-  return SocialNetworkAPI.authMe()
-    .then((response) => {
-      if (response.data.resultCode === 0) {
-        const { id: userId, login, email } = { ...response.data.data };
+export const setAuthUserDataThunkCreator = () => async (dispatch) => {
+    const response = await SocialNetworkAPI.authMe();
+    if (response.data.resultCode === 0) {
+        const {id: userId, login, email} = {...response.data.data};
         dispatch(setAuthUserDataActionCreator(userId, email, login));
-      }
-    })
-    .catch((error) => {
-      console.error("Set auth user error => ", error);
-    });
+    }
 };
 
-export const loginViaFormThunkCreator = (data) => (dispatch) => {
-  SocialNetworkAPI.authLogin(data)
-    .then((response) => {
-      if (response.data.resultCode === 0) {
-        const { userId } = { ...response.data.data };
-        dispatch(loginViaFormActionCreator({ userId }));
-        SocialNetworkAPI.getUserProfile(userId)
-        .then(response => {
-          dispatch(setAuthUserDataActionCreator(userId, null, response.data.fullName));
-        })
-      }else{
+export const loginViaFormThunkCreator = (data) => async (dispatch) => {
+
+    const authResponse = await SocialNetworkAPI.authLogin(data);
+    if (authResponse.data.resultCode === 0) {
+        const {userId} = {...authResponse.data.data};
+        dispatch(loginViaFormActionCreator({userId}));
+        const userProfileResponse = await SocialNetworkAPI.getUserProfile(userId)
+        dispatch(setAuthUserDataActionCreator(userId, null, userProfileResponse.data.fullName));
+    } else {
         dispatch(stopSubmit("login", {
-          _error: response.data.messages.length ? response.data.messages[0] : "Something went wrong"
+            _error: authResponse.data.messages.length ? authResponse.data.messages[0] : "Something went wrong"
         }));
-      }
-    })
-    .catch((error) => {
-      console.error("Login via form error => ", error);
-    });
+    }
 };
 
-export const logoutThunkCreator = () => (dispatch) => {
-  SocialNetworkAPI.authLogout()
-    .then((response) => {
-      if (response.data.resultCode === 0) {
+export const logoutThunkCreator = () => async (dispatch) => {
+    const logoutResponse = await SocialNetworkAPI.authLogout();
+    if (logoutResponse.data.resultCode === 0) {
         dispatch(logoutActionCreator());
-      }
-    })
-    .catch((error) => {
-      console.error("Logout error => ", error);
-    });
+    }
 };
