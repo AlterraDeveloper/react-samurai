@@ -5,11 +5,14 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+
 }
 
 .usersList{
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr auto;
+	max-height: 90vh;
+	overflow-y: scroll;
 }
 

@@ -1,59 +1,69 @@
-.messageContainer{
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	justify-content: space-around;
-	/* border: 5px solid red */
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    border-left: 1px solid black;
+    height: 100vh;
 }
 
 .messages {
-	font-size: 18px;
-	display: flex;
-	flex-direction: column;
-	/* width: 90%; */
-	padding: 0 30px;
-	max-height: 70vh;
-	overflow-y: auto;
-	position: relative;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+    width: 100%;
+    height:83%;
+    overflow-y: auto;
+    position: relative;
 }
 
 .messageForm {
-	position: absolute;
-	bottom: 2%;
-	right: 2%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;	
-	width: 60vw;
-	display: flex;
-	margin: 0 auto;
-	/* border: 5px solid; */
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: flex-end;*/
+    width: 61.5%;
+    /*margin: 0 auto;*/
+    /*border: 5px solid blue;*/
 }
 
-.messageForm textarea{
-	width: 100%;
-	outline: none;
-	border: none;
-	font-size: 1.2rem;
-	padding: 10px;
-	border-radius: 10px;
-	resize: none;
+.messageForm form{
+    width: 100%;
+    position: relative;
 }
 
-.messageForm button{
-	color: #fff;
-	background-color: darkolivegreen;
-	padding: 5px 30px;
-	border-radius: 20px;
-	font-size: 1.2rem;
-	margin-top: 10px;
-	outline: none;
+.messageForm textarea {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    font-size: 1.2rem;
+    padding: 10px;
+    resize: none;
 }
 
-.messageForm button:hover{
-	color: darkolivegreen;
-	background-color: #fff;
-	cursor: pointer;
+.messageForm button {
+    color: #fff;
+    background-color: darkolivegreen;
+    padding: 5px 30px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    outline: none;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 10;
+
+}
+
+.messageForm button:hover {
+    color: darkolivegreen;
+    background-color: #fff;
+    cursor: pointer;
 }
 
