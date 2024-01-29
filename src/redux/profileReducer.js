@@ -4,6 +4,7 @@ import {SocialNetworkAPI} from "../api/api";
 const ADD_POST = "samurai-network/profile/ADD-POST";
 const DELETE_POST = "samurai-network/profile/DELETE-POST";
 const SET_USER_PROFILE = "samurai-network/profile/SET_USER_PROFILE";
+const SET_USER_PROFILE_PHOTO = "samurai-network/profile/SET_USER_PROFILE_PHOTO";
 const SET_STATUS = "samurai-network/profile/SET_STATUS";
 
 const initialState = {
@@ -70,6 +71,11 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: state.posts.filter(p => p.id !== action.postId)
+            };
+        case SET_USER_PROFILE_PHOTO:
+            return {
+                ...state,
+                userProfile: {...state.userProfile, ...action.photos}
             }
         default:
             return state;
@@ -89,6 +95,11 @@ export const deletePostActionCreator = (postId) => ({
 export const setUserProfileActionCreator = (userProfile) => ({
     type: SET_USER_PROFILE,
     userProfile,
+});
+
+export const setUserProfilePhotoActionCreator = (photos) => ({
+    type: SET_USER_PROFILE_PHOTO,
+    photos: photos.data,
 });
 
 export const setStatusActionCreator = (status) => ({
@@ -111,4 +122,9 @@ export const setStatusThunkCreator = (status) => async (dispatch) => {
 export const getStatusThunkCreator = (userId) => async (dispatch) => {
     const response = SocialNetworkAPI.getUserProfileStatus(userId);
     dispatch(setStatusActionCreator(response.data));
+};
+
+export const uploadProfilePhotoThunkCreator = (photo) => async (dispatch) => {
+    const response = await SocialNetworkAPI.uploadUserProfilePhoto(photo);
+    dispatch(setUserProfilePhotoActionCreator(response.data));
 };
