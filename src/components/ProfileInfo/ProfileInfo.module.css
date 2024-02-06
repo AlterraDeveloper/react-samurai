@@ -1,0 +1,124 @@
+
+.contacts {
+    padding-left: 20px;
+}
+
+.profileInfoWrapper {
+    display: flex;
+    min-height: 400px;
+    padding: 20px;
+    gap: 20px;
+    height: fit-content;
+}
+
+.profileInfoLeft {
+    width: 50%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profileLogo {
+    height: 60%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.profileField {
+    width: 85%;
+    display: flex;
+    align-items: center;
+    font-size: 1.25em;
+}
+
+.profileField span {
+    opacity: .6;
+    padding-left: 20px;
+}
+
+.profileField b{
+
+}
+
+.profileField b{
+    width: fit-content;
+}
+
+.profileInfoRight {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profileInfoJob,
+.profileInfoContacts {
+    min-height: 50%;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardTitle {
+    font-size: 2em;
+    text-align: left;
+    width: 100%;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(110, 105, 105, 0.3);
+}
+
+.contacts {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 25px;
+}
+
+.contact {
+    background-color: #8e40af;
+    width: 20%;
+    border-radius: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.editBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.editBtn button {
+    width: 40%;
+    border: none;
+    padding: 10px 50px;
+    font-size: 1.5em;
+    background-color: #51d1da;
+    border-radius: 100px;
+    color: white;
+    font-weight: 700;
+}
+
+.editContacts{
+
+}

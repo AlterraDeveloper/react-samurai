@@ -5,7 +5,7 @@ import {
     addPostActionCreator,
     setUserProfileThunkCreator,
     setStatusThunkCreator,
-    getStatusThunkCreator, uploadProfilePhotoThunkCreator,
+    getStatusThunkCreator, uploadProfilePhotoThunkCreator, updateUserProfileThunkCreator,
 } from "../../redux/profileReducer";
 import {withRouter} from "../../hoc/withRouter";
 import {compose} from "redux";
@@ -46,7 +46,8 @@ const mapDispatchToProps = {
     addPost: addPostActionCreator,
     updateUserStatus: setStatusThunkCreator,
     getUserStatus: getStatusThunkCreator,
-    uploadProfilePhoto: uploadProfilePhotoThunkCreator
+    uploadProfilePhoto: uploadProfilePhotoThunkCreator,
+    updateUserProfile: updateUserProfileThunkCreator
 };
 
 export default compose(

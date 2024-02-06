@@ -4,6 +4,7 @@ import {SocialNetworkAPI} from "../api/api";
 const ADD_POST = "samurai-network/profile/ADD-POST";
 const DELETE_POST = "samurai-network/profile/DELETE-POST";
 const SET_USER_PROFILE = "samurai-network/profile/SET_USER_PROFILE";
+const UPDATE_USER_PROFILE = "samurai-network/profile/UPDATE_USER_PROFILE";
 const SET_USER_PROFILE_PHOTO = "samurai-network/profile/SET_USER_PROFILE_PHOTO";
 const SET_STATUS = "samurai-network/profile/SET_STATUS";
 
@@ -62,6 +63,11 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 userProfile: action.userProfile,
             };
+        case UPDATE_USER_PROFILE:
+            return {
+                ...state,
+                userProfile: {...state.userProfile, ...action.userProfile},
+            };
         case SET_STATUS:
             return {
                 ...state,
@@ -97,6 +103,11 @@ export const setUserProfileActionCreator = (userProfile) => ({
     userProfile,
 });
 
+export const updateUserProfileActionCreator = (userProfile) => ({
+    type: UPDATE_USER_PROFILE,
+    userProfile,
+});
+
 export const setUserProfilePhotoActionCreator = (photos) => ({
     type: SET_USER_PROFILE_PHOTO,
     photos: photos.data,
@@ -111,6 +122,14 @@ export const setUserProfileThunkCreator = (userId) => async (dispatch) => {
     const response = await SocialNetworkAPI.getUserProfile(userId);
     dispatch(setUserProfileActionCreator(response.data));
 };
+
+export const updateUserProfileThunkCreator = (userProfile) => async (dispatch) => {
+    const response = await SocialNetworkAPI.updateUserProfile(userProfile);
+    if(response.data.resultCode === 0){
+        dispatch(updateUserProfileActionCreator(response.data));
+    }
+};
+
 
 export const setStatusThunkCreator = (status) => async (dispatch) => {
     const response = await SocialNetworkAPI.updateUserProfileStatus(status);

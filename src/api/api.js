@@ -27,6 +27,8 @@ export const SocialNetworkAPI = {
 
     getUserProfile: (userId) => socialNetworkApi.get(`/profile/${userId}`),
 
+    updateUserProfile: (userProfile) => socialNetworkApi.put(`/profile`, userProfile),
+
     uploadUserProfilePhoto: (photo) => {
         const formData = new FormData();
         formData.append("image", photo);

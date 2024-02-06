@@ -11,6 +11,7 @@ const Profile = (props) => {
                 updateUserStatus={props.updateUserStatus}
                 authData={props.authData}
                 uploadProfilePhoto={props.uploadProfilePhoto}
+                updateUserProfile={props.updateUserProfile}
             />
             <MyPosts
                 posts={props.profilePage.posts}
