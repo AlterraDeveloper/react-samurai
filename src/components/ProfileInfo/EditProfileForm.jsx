@@ -2,7 +2,6 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import s from "./ProfileInfo.module.css";
 import userPhoto from "../../assets/images/user.png";
-import { connect } from "react-redux";
 
 const EditProfileForm = (props) => {
   const uploadProfilePhoto = (e) => {
@@ -11,6 +10,7 @@ const EditProfileForm = (props) => {
 
   return (
     <form onSubmit={props.handleSubmit}>
+      {props.error && <div className={s.error}>{props.error}</div>}
       <div className={s.profileInfoWrapper}>
         <div className={s.profileInfoLeft}>
           <div className={s.profileLogo}>
@@ -47,7 +47,7 @@ const EditProfileForm = (props) => {
             ></Field>
           </div>
           <div className={s.editBtn}>
-            <button onClick={() => {}}>Save</button>
+            <input type="submit" value={"Save"}/>
           </div>
         </div>
         <div className={s.profileInfoRight}>
@@ -91,7 +91,6 @@ const EditProfileForm = (props) => {
           </div>
         </div>
       </div>
-      <input type="submit" value={"Save"} />
     </form>
   );
 };
@@ -102,5 +101,6 @@ export default reduxForm({
   initialValues: {
     fullName: "TEST TEST",
     aboutMe: "123 123 123 123",
+    contacts: {}
   },
 })(EditProfileForm);

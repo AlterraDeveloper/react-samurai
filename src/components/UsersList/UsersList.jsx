@@ -17,14 +17,14 @@ export const UsersList = (props) => {
 
     return (
         <div className={s.usersList}>
-            <Pagination itemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage}
+            <Pagination key={1} itemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage}
                         onPageChanged={props.onPageChanged}/>
             {props.isUsersLoading ? (
                 <Preloader/>
             ) : (
                 <div className={s.users}>{users}</div>
             )}
-            <Pagination itemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage}
+            <Pagination key={2} itemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage}
                         onPageChanged={props.onPageChanged}/>
         </div>
     );

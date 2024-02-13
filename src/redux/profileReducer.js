@@ -1,5 +1,6 @@
 import {getRandomIntInRange} from "../helpers";
 import {SocialNetworkAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = "samurai-network/profile/ADD-POST";
 const DELETE_POST = "samurai-network/profile/DELETE-POST";
@@ -123,13 +124,17 @@ export const setUserProfileThunkCreator = (userId) => async (dispatch) => {
     dispatch(setUserProfileActionCreator(response.data));
 };
 
-export const updateUserProfileThunkCreator = (userProfile) => async (dispatch) => {
+export const updateUserProfileThunkCreator = (userProfile, afterUpdateCallback) => async (dispatch, getState) => {
     const response = await SocialNetworkAPI.updateUserProfile(userProfile);
-    if(response.data.resultCode === 0){
+    if (response.data.resultCode === 0) {
         dispatch(updateUserProfileActionCreator(response.data));
+        const {userId} = {...getState().auth};
+        dispatch(setUserProfileThunkCreator(userId));
+        afterUpdateCallback();
+    }else{
+        dispatch(stopSubmit("editProfileForm", {_error: response.data.messages[0]}))
     }
 };
-
 
 export const setStatusThunkCreator = (status) => async (dispatch) => {
     const response = await SocialNetworkAPI.updateUserProfileStatus(status);

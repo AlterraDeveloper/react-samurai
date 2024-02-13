@@ -44,7 +44,7 @@ export const Pagination = (props) => {
         pages = getArrayFromRange(1, pagesCount);
     }
 
-    return <div className={s.pages}>
+    return <div key={props.key} className={s.pages}>
         {pages.map((page) => page === -1
             ? <PageDelimiter/>
             : <Page page={page} currentPage={props.currentPage} onPageChanged={props.onPageChanged}/>)}
