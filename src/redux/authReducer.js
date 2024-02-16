@@ -4,12 +4,14 @@ import {stopSubmit} from "redux-form";
 const SET_USER_DATA = "samurai-network/auth/SET_USER_DATA";
 const LOGIN_VIA_FORM = "samurai-network/auth/LOGIN_VIA_FORM";
 const LOGOUT = "samurai-network/auth/LOGOUT";
+const SET_CAPTCHA = "samurai-network/auth/SET_CAPTCHA";
 
 const initialState = {
     userId: null,
     login: null,
     email: null,
     isAuth: false,
+    captchaUrl: null
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -28,6 +30,11 @@ export const authReducer = (state = initialState, action) => {
                 login: null,
                 email: null,
                 isAuth: false,
+            };
+        case SET_CAPTCHA:
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
             };
         default:
             return state;
@@ -52,6 +59,11 @@ export const setAuthUserDataActionCreator = (userId, email, login) => ({
     },
 });
 
+export const setCaptchaActionCreator = (captchaUrl) => ({
+    type: SET_CAPTCHA,
+    captchaUrl: captchaUrl
+})
+
 export const setAuthUserDataThunkCreator = () => async (dispatch) => {
     const response = await SocialNetworkAPI.authMe();
     if (response.data.resultCode === 0) {
@@ -61,13 +73,14 @@ export const setAuthUserDataThunkCreator = () => async (dispatch) => {
 };
 
 export const loginViaFormThunkCreator = (data) => async (dispatch) => {
-
     const authResponse = await SocialNetworkAPI.authLogin(data);
     if (authResponse.data.resultCode === 0) {
         const {userId} = {...authResponse.data.data};
         dispatch(loginViaFormActionCreator({userId}));
         const userProfileResponse = await SocialNetworkAPI.getUserProfile(userId)
         dispatch(setAuthUserDataActionCreator(userId, null, userProfileResponse.data.fullName));
+    } else if (authResponse.data.resultCode === 10) {
+        dispatch(setCaptchaThunkCreator())
     } else {
         dispatch(stopSubmit("login", {
             _error: authResponse.data.messages.length ? authResponse.data.messages[0] : "Something went wrong"
@@ -81,3 +94,8 @@ export const logoutThunkCreator = () => async (dispatch) => {
         dispatch(logoutActionCreator());
     }
 };
+
+export const setCaptchaThunkCreator = () => async (dispatch) => {
+    const response  = await SocialNetworkAPI.getCaptcha();
+    dispatch(setCaptchaActionCreator(response.data.url));
+}

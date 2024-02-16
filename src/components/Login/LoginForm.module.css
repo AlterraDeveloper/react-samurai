@@ -1,0 +1,33 @@
+
+.captchaWrapper{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.captchaImage {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.captchaImage img {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+}
+
+.captchaImage:hover img:nth-child(1) {
+    opacity: 0.5;
+}
+
+.captchaImage img:nth-child(2) {
+    display: none;
+}
+
+.captchaImage:hover img:nth-child(2) {
+    display: block;
+}

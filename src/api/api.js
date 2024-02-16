@@ -51,8 +51,10 @@ export const SocialNetworkAPI = {
         email: data.login,
         password: data.password,
         rememberMe: data.rememberMe,
-        captcha: false
+        captcha: data.captcha
     }),
 
-    authLogout: () => socialNetworkApi.delete("auth/login")
+    authLogout: () => socialNetworkApi.delete("auth/login"),
+
+    getCaptcha: () => socialNetworkApi.get("security/get-captcha-url")
 };
