@@ -1,16 +1,14 @@
 import React from 'react';
 import s from "./Pagination.module.css";
 import {getArrayFromRange} from "../../utils/arrayUtils";
+import cn from "classnames"
 
 const Page = (props) => {
-    const classes = `${s.page} ${
-        props.currentPage === props.page && s.selectedPage
-    }`;
     return (
         <span
             key={props.page}
             onClick={props.onPageChanged.bind(null, props.page)}
-            className={classes}
+            className={cn(s.page, {[s.selectedPage]: props.currentPage === props.page})}
         >
               {props.page}
             </span>

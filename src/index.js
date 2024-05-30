@@ -5,7 +5,6 @@ import App from "./App";
 import store from "./redux/reduxStore";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
-import {Preloader} from "./components/Preloader/Preloader";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -14,13 +13,15 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // }, 1000);
 
 // const rerenderEntireTree = () => {
-root.render(<React.StrictMode>
-    <BrowserRouter>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </BrowserRouter>
-</React.StrictMode>);
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>
+);
 // };
 
 // rerenderEntireTree();
