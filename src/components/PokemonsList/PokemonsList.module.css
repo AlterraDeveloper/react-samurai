@@ -1,0 +1,31 @@
+
+.pokemonContainer{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+.pokemonList{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    gap:10px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.showMoreButton{
+    padding: 30px 50px;
+    margin-bottom: 40px;
+    border:none;
+    width: 50%;
+    border-radius: 70px;
+    font-size: 2rem;
+    cursor: pointer;
+    background-color: #86d7dd;
+}
