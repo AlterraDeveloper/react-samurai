@@ -45,7 +45,7 @@ export const dialogsReducer = (state = initialState, action) => {
 
       const newMessage = {
         message: action.newMessageText,
-        isMine: getRandomIntInRange(0, 2),
+        isMine: getRandomIntInRange(0, 1000) % 2 === 0,
       };
 
       return {
